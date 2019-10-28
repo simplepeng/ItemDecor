@@ -1,2 +1,2 @@
-include ':app', ':item-decor'
+include ':app', ':item_decor'
 rootProject.name='ItemDecor'
