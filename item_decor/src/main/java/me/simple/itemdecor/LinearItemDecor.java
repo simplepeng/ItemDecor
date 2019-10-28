@@ -19,7 +19,7 @@ public class LinearItemDecor implements IFilter<LinearItemDecor> {
     private int mOrientation = VERTICAL;
 
     /**
-     *
+     * ItemDecoration的颜色
      */
     private int mColor = Color.GRAY;
     /**
@@ -39,6 +39,9 @@ public class LinearItemDecor implements IFilter<LinearItemDecor> {
      *
      */
     private FilterFunc mFilterFunc;
+    /**
+     * 是否保存最后一个ItemDecoration
+     */
     private boolean mRetainLast = false;
 
     public LinearItemDecor() {
@@ -58,6 +61,11 @@ public class LinearItemDecor implements IFilter<LinearItemDecor> {
         this.mOrientation = mOrientation;
         paint.setColor(mColor);
         this.mPaint = paint;
+    }
+
+    public LinearItemDecor setOrientation(int orientation) {
+        this.mOrientation = orientation;
+        return this;
     }
 
     public LinearItemDecor setColor(int color) {

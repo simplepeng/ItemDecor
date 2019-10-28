@@ -26,3 +26,15 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext{
+    compileSdkVersion = 28
+    buildToolsVersion = "29.0.1"
+
+    minSdkVersion = 14
+    targetSdkVersion = 28
+
+    groupId = "me.simple"
+    artifactId = "item-decor"
+    publishVersion = "1.0.0"
+}
