@@ -1,13 +1,14 @@
 package example.simple.itemdecor.multitype;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import example.simple.itemdecor.R;
 import me.drakeet.multitype.ItemViewBinder;
-import me.simple.itemdecor.demo.R;
 
 public class MultiTypeHeaderItemBinder extends ItemViewBinder<MultiTypeHeaderBean, MultiTypeHeaderItemBinder.VH> {
 

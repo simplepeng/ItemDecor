@@ -2,21 +2,22 @@ package example.simple.itemdecor.multitype;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import example.simple.itemdecor.R;
+import example.simple.itemdecor.ShaderItemDecor;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.simple.itemdecor.AbsItemDecor;
 import me.simple.itemdecor.LinearItemDecor;
 import me.simple.itemdecor.Linker;
 import me.simple.itemdecor.MultiItemDecor;
-import me.simple.itemdecor.demo.R;
-import me.simple.itemdecor.demo.ShaderItemDecorator;
 
 public class MultiTypeActivity extends AppCompatActivity {
 
@@ -59,7 +60,7 @@ public class MultiTypeActivity extends AppCompatActivity {
                 .setHeight(3)
                 .setMarginHorizontal(115)
                 .build();
-        final AbsItemDecor decoration5 = new ShaderItemDecorator();
+        final AbsItemDecor decoration5 = new ShaderItemDecor();
 
         RecyclerView.ItemDecoration decoration = new MultiItemDecor()
                 .register(decoration1)

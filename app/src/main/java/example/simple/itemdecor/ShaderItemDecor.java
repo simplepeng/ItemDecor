@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import me.simple.itemdecor.AbsItemDecor;
 
-public class ShaderItemDecorator extends AbsItemDecor {
+public class ShaderItemDecor extends AbsItemDecor {
 
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int mHeight = 50;
