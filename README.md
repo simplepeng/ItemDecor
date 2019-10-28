@@ -1,6 +1,6 @@
 # ItemDecor
 
-RecyclerView.ItemDecoration简易写法
+RecyclerView.ItemDecoration的简易写法
 
 |                      LinearDecor                       |                     GridItemDecor                      |                   MultiTypeDecorator                   |
 | :----------------------------------------------------: | :----------------------------------------------------: | :----------------------------------------------------: |
@@ -20,6 +20,7 @@ AbsItemDecor itemDecor = new LinearItemDecor()
                 .retainLast()//保留最后一个ItemDecoration，默认不保留
                 .setMarginHorizontal(33.5f)
                 .build();
+rv_vertical.addItemDecoration(itemDecor);
 ```
 
 默认最后的`ItemDecoration`是没有画出来的，可以使用`retainLast()`方法保留最后一个ItemDecoration

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -10,8 +12,30 @@ android {
     }
 }
 
+uploadArchives {
+    repositories.mavenDeployer {
+        // 本地仓库路径
+        repository(url: 'file:///Users/chenpeng/Desktop/Repositories/')
+        // 唯一标识
+        pom.groupId = rootProject.ext.groupId
+        // 项目名称
+        pom.artifactId = rootProject.ext.artifactId
+        // 版本号
+        pom.version = rootProject.ext.publishVersion
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api "androidx.recyclerview:recyclerview:1.0.0"
+}
+
+publish {
+    userOrg = 'simplepeng'
+    groupId = rootProject.ext.groupId
+    artifactId = rootProject.ext.artifactId
+    publishVersion = rootProject.ext.publishVersion
+    desc = 'RecyclerView.ItemDecoration的简易写法'
+    website = 'https://github.com/simplepeng/ItemDecor'
 }
