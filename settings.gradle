@@ -1,0 +1,2 @@
+include ':app', ':item-decor'
+rootProject.name='ItemDecor'

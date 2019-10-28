@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingTop="17dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_nickName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="NickName"
+        android:textColor="#333"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="0dp"
+        android:layout_marginRight="10dp"
+        android:lineSpacingExtra="5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="点赞了你的评论：我觉得还可以啊"
+        android:textColor="#666"
+        android:textSize="13dp"
+        app:layout_constraintStart_toStartOf="@id/tv_nickName"
+        app:layout_constraintTop_toBottomOf="@id/tv_nickName" />
+</android.support.constraint.ConstraintLayout>
