@@ -16,7 +16,7 @@ import example.simple.itemdecor.R;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.simple.itemdecor.AbsItemDecor;
-import me.simple.itemdecor.FilterFunc;
+import me.simple.itemdecor.FilterFun;
 import me.simple.itemdecor.LinearItemDecor;
 
 public class LinearActivity extends AppCompatActivity {
@@ -68,12 +68,7 @@ public class LinearActivity extends AppCompatActivity {
         AbsItemDecor itemDecor = new LinearItemDecor()
                 .setHeight(10)
                 .setColor(Color.BLACK)
-                .filter(new FilterFunc() {
-                    @Override
-                    public boolean exclude(int position) {
-                        return position == 2 || position == 5;
-                    }
-                })
+                .filter(2,5)
                 .retainLast()
                 .setMarginHorizontal(33.5f)
                 .build();

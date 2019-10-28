@@ -1,41 +1,30 @@
-# ItemDecorator
+# ItemDecor
 
-## LinearDecorator
+RecyclerView.ItemDecoration简易写法
+
+## LinearDecor
 
 ```java
-AbsItemDecorator itemdecor = new LinearDecorator()
+AbsItemDecor itemDecor = new LinearItemDecor()
                 .setHeight(10)
                 .setColor(Color.BLACK)
-                .retainLast()//保留最后一个ItemDecoration
+                .filter(2,5)
+                .retainLast()//保留最后一个ItemDecoration，默认不保留
                 .setMarginHorizontal(33.5f)
                 .build();
-rv_vertical.addItemDecoration(itemdecor);
 ```
 
 默认最后的`ItemDecoration`是没有画出来的，可以使用`retainLast()`方法保留最后一个ItemDecoration
 
-### 高级操作
-
-可以使用`filter`方法排除掉某些position的`ItemDecoration`
+## GridItemDecor
 
 ```java
-.filter(new FilterFunc() {
-              @Override
-              public boolean exclude(int position) {
-                 return position == 2 || position == 5;
-            }
-})
-```
-
-## SpaceItemDecorator
-
-```java
-AbsItemDecorator spaceItemDecor = new SpaceItemDecorator(4)
+AbsItemDecor spaceItemDecor = new GridItemDecor()
                 .setMargin(20)
-                .filter(new FilterFunc() {
+                .filter(new FilterFun() {
                     @Override
                     public boolean exclude(int position) {
-                        return false;
+                       return position == 1;
                     }
                 })
                 .build();
@@ -45,25 +34,25 @@ rv_grid.addItemDecoration(spaceItemDecor);
 ## MultiTypeDecorator
 
 ```java
-final AbsItemDecorator decoration1 = new LinearDecorator()
+final AbsItemDecor decoration1 = new LinearItemDecor()
                 .setHeight(20)
                 .setColor(Color.LTGRAY)
                 .build();
-final AbsItemDecorator decoration2 = new LinearDecorator()
+final AbsItemDecor decoration2 = new LinearItemDecor()
                 .setColor(Color.BLACK)
                 .build();
-final AbsItemDecorator decoration3 = new LinearDecorator()
+final AbsItemDecor decoration3 = new LinearItemDecor()
                 .setColor(Color.RED)
                 .setMarginLeft(45)
                 .build();
-final AbsItemDecorator decoration4 = new LinearDecorator()
+final AbsItemDecor decoration4 = new LinearItemDecor()
                 .setColor(Color.GREEN)
                 .setHeight(3)
                 .setMarginHorizontal(115)
                 .build();
-final AbsItemDecorator decoration5 = new ShaderItemDecorator();
+final AbsItemDecor decoration5 = new ShaderItemDecor();
 
-RecyclerView.ItemDecoration decoration = new MultiTypeDecorator()
+RecyclerView.ItemDecoration decoration = new MultiItemDecor()
                 .register(decoration1)
                 .register(decoration2)
                 .register(decoration3)
@@ -71,7 +60,7 @@ RecyclerView.ItemDecoration decoration = new MultiTypeDecorator()
                 .register(decoration5)
                 .withLinker(new Linker() {
                     @Override
-                    public AbsItemDecorator bind(int position) {
+                    public AbsItemDecor bind(int position) {
                         switch (position) {
                             case 0:
                                 return decoration3;
@@ -92,7 +81,7 @@ recyclerView.addItemDecoration(decoration);
 ## 自定义
 
 ```java
-public class ShaderItemDecorator extends AbsItemDecorator {
+public class ShaderItemDecor extends AbsItemDecor {
 
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int mHeight = 50;
@@ -123,4 +112,19 @@ public class ShaderItemDecorator extends AbsItemDecorator {
         outRect.set(0, 0, 0, mHeight);
     }
 }
+```
+
+### 高级操作
+
+可以使用`filter`方法排除掉某些position的`ItemDecoration`，只能使用以下方法中的其中一个，不可同时使用。
+
+```java
+.filter(new FilterFun() {
+    @Override
+    public boolean exclude(int position) {
+        return position == 2 || position == 5;
+    }
+})
+	//或者
+.filter(2,5)
 ```

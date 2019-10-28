@@ -13,7 +13,7 @@ import example.simple.itemdecor.R;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.simple.itemdecor.AbsItemDecor;
-import me.simple.itemdecor.FilterFunc;
+import me.simple.itemdecor.FilterFun;
 import me.simple.itemdecor.GridItemDecor;
 
 public class GridActivity extends AppCompatActivity {
@@ -40,18 +40,18 @@ public class GridActivity extends AppCompatActivity {
         rv_grid.setLayoutManager(new GridLayoutManager(this, 4));
         rv_grid.setAdapter(mAdapter);
 
-        AbsItemDecor spaceItemDecor = new GridItemDecor(4)
+        AbsItemDecor spaceItemDecor = new GridItemDecor()
                 .setMargin(20)
-                .filter(new FilterFunc() {
+                .filter(new FilterFun() {
                     @Override
                     public boolean exclude(int position) {
-                        return false;
+                        return position == 1;
                     }
                 })
                 .build();
         rv_grid.addItemDecoration(spaceItemDecor);
 
-        for (int i=0;i<5;i++) {
+        for (int i = 0; i < 5; i++) {
             mItems.add(new GridItemBean());
             mItems.add(new GridItemBean());
             mItems.add(new GridItemBean());

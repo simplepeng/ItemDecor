@@ -1,5 +1,7 @@
 package me.simple.itemdecor;
 
 public interface IFilter<T> {
-    T filter(FilterFunc func);
+    T filter(FilterFun func);
+
+    T filter(int... excludes);
 }

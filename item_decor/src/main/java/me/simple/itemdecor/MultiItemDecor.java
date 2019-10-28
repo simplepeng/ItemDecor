@@ -11,7 +11,7 @@ public class MultiItemDecor implements IFilter<MultiItemDecor> {
 
     private SparseArray<AbsItemDecor> mItemDecors = new SparseArray<>();
     private Linker mLinker;
-    private FilterFunc mFilterFunc;
+    private FilterFun mFilterFun;
 
     public <T extends AbsItemDecor> MultiItemDecor register(T itemDecoration) {
         mItemDecors.put(itemDecoration.hashCode(), itemDecoration);
@@ -24,8 +24,13 @@ public class MultiItemDecor implements IFilter<MultiItemDecor> {
     }
 
     @Override
-    public MultiItemDecor filter(FilterFunc func) {
-        this.mFilterFunc = func;
+    public MultiItemDecor filter(FilterFun func) {
+        this.mFilterFun = func;
+        return this;
+    }
+
+    @Override
+    public MultiItemDecor filter(int... excludes) {
         return this;
     }
 
@@ -34,7 +39,7 @@ public class MultiItemDecor implements IFilter<MultiItemDecor> {
             @Override
             public void onDraw(Canvas canvas, int position, Rect bounds, View itemView,
                                RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFunc != null && mFilterFunc.exclude(position)) return;
+                if (mFilterFun != null && mFilterFun.exclude(position)) return;
 
                 getItemDecoration(position).onDraw(canvas, position, bounds, itemView, parent, state);
             }
@@ -42,7 +47,7 @@ public class MultiItemDecor implements IFilter<MultiItemDecor> {
             @Override
             public void onDrawOver(Canvas canvas, int position, Rect bounds, View itemView,
                                    RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFunc != null && mFilterFunc.exclude(position)) return;
+                if (mFilterFun != null && mFilterFun.exclude(position)) return;
 
                 getItemDecoration(position).onDrawOver(canvas, position, bounds, itemView, parent, state);
             }
@@ -50,7 +55,7 @@ public class MultiItemDecor implements IFilter<MultiItemDecor> {
             @Override
             public void setOutRect(Rect outRect, int position, View itemView,
                                    RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFunc != null && mFilterFunc.exclude(position)) {
+                if (mFilterFun != null && mFilterFun.exclude(position)) {
                     outRect.set(0, 0, 0, 0);
                     return;
                 }

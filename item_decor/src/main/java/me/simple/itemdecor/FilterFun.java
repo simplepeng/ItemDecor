@@ -1,5 +1,5 @@
 package me.simple.itemdecor;
 
-public interface FilterFunc {
+public interface FilterFun {
     boolean exclude(int position);
 }

@@ -9,6 +9,8 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.HashSet;
+
 public class LinearItemDecor implements IFilter<LinearItemDecor> {
 
     private Paint mPaint;
@@ -38,7 +40,8 @@ public class LinearItemDecor implements IFilter<LinearItemDecor> {
     /**
      *
      */
-    private FilterFunc mFilterFunc;
+    private FilterFun mFilterFun;
+    private HashSet<Integer> mExcludes;
     /**
      * 是否保存最后一个ItemDecoration
      */
@@ -126,8 +129,17 @@ public class LinearItemDecor implements IFilter<LinearItemDecor> {
     }
 
     @Override
-    public LinearItemDecor filter(FilterFunc func) {
-        this.mFilterFunc = func;
+    public LinearItemDecor filter(FilterFun func) {
+        this.mFilterFun = func;
+        return this;
+    }
+
+    @Override
+    public LinearItemDecor filter(int... excludes) {
+        mExcludes = new HashSet<>();
+        for (int exclude : excludes) {
+            mExcludes.add(exclude);
+        }
         return this;
     }
 
@@ -140,11 +152,16 @@ public class LinearItemDecor implements IFilter<LinearItemDecor> {
     }
 
     public AbsItemDecor build() {
+        Utils.checkFilter(mFilterFun, mExcludes);
         return new AbsItemDecor() {
             @Override
             public void onDraw(Canvas canvas, int position, Rect bounds, View itemView,
                                RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFunc != null && mFilterFunc.exclude(position)) {
+                if (mFilterFun != null && mFilterFun.exclude(position)) {
+                    return;
+                }
+
+                if (mExcludes != null && mExcludes.contains(position)) {
                     return;
                 }
 
@@ -168,7 +185,12 @@ public class LinearItemDecor implements IFilter<LinearItemDecor> {
             @Override
             public void setOutRect(Rect outRect, int position, View itemView,
                                    RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFunc != null && mFilterFunc.exclude(position)) {
+                if (mFilterFun != null && mFilterFun.exclude(position)) {
+                    outRect.set(0, 0, 0, 0);
+                    return;
+                }
+
+                if (mExcludes != null && mExcludes.contains(position)) {
                     outRect.set(0, 0, 0, 0);
                     return;
                 }

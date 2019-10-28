@@ -6,9 +6,10 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.HashSet;
+
 public class GridItemDecor implements IFilter<GridItemDecor> {
 
-    private int mSpanCount;
     /**
      *
      */
@@ -19,11 +20,8 @@ public class GridItemDecor implements IFilter<GridItemDecor> {
     /**
      *
      */
-    private FilterFunc mFilterFunc;
-
-    public GridItemDecor(int spanCount) {
-        this.mSpanCount = spanCount;
-    }
+    private FilterFun mFilterFun;
+    private HashSet<Integer> mExcludes;
 
     public GridItemDecor setMargin(int margin) {
         this.mMarginLeft = margin;
@@ -53,17 +51,23 @@ public class GridItemDecor implements IFilter<GridItemDecor> {
         return this;
     }
 
-    public void setSpanCount(int spanCount) {
-        this.mSpanCount = spanCount;
+    @Override
+    public GridItemDecor filter(FilterFun func) {
+        this.mFilterFun = func;
+        return this;
     }
 
     @Override
-    public GridItemDecor filter(FilterFunc func) {
-        this.mFilterFunc = func;
+    public GridItemDecor filter(int... excludes) {
+        mExcludes = new HashSet<>();
+        for (int exclude : excludes) {
+            mExcludes.add(exclude);
+        }
         return this;
     }
 
     public AbsItemDecor build() {
+        Utils.checkFilter(mFilterFun, mExcludes);
         return new AbsItemDecor() {
             @Override
             public void onDraw(Canvas canvas, int position, Rect bounds, View itemView,
@@ -80,22 +84,18 @@ public class GridItemDecor implements IFilter<GridItemDecor> {
             @Override
             public void setOutRect(Rect outRect, int position, View itemView,
                                    RecyclerView parent, RecyclerView.State state) {
-                if (mSpanCount < 1) {
-                    throw new IllegalArgumentException("Span count should be at least 1. Provided " + mSpanCount);
-                }
 
-                if (mFilterFunc != null && mFilterFunc.exclude(position)) {
+                if (mFilterFun != null && mFilterFun.exclude(position)) {
                     outRect.set(0, 0, 0, 0);
                     return;
                 }
 
-                if (mSpanCount == 1) {
-                    outRect.set(mMarginLeft, mMarginTop, mMarginRight, mMarginBottom);
+                if (mExcludes != null && mExcludes.contains(position)) {
+                    outRect.set(0, 0, 0, 0);
                     return;
                 }
 
-                parent.setPadding(mMarginLeft / 2, mMarginTop / 2, mMarginRight / 2, mMarginBottom / 2);
-                outRect.set(mMarginLeft / 2, mMarginTop / 2, mMarginRight / 2, mMarginBottom / 2);
+                outRect.set(mMarginLeft, mMarginTop, mMarginRight, mMarginBottom);
             }
         };
     }
