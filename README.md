@@ -2,13 +2,22 @@
 
 RecyclerView.ItemDecoration的简易写法
 
-|                      LinearDecor                       |                     GridItemDecor                      |                     MultiItemDecor                     |
+|                    LinearItemDecor                     |                     GridItemDecor                      |                     MultiItemDecor                     |
 | :----------------------------------------------------: | :----------------------------------------------------: | :----------------------------------------------------: |
-| ![](https://i.loli.net/2019/10/28/QCzFwHBYVc1ZOKn.png) | ![](https://i.loli.net/2019/10/28/rYUnTsjWE7t5PXd.png) | ![](https://i.loli.net/2019/10/28/t3mfny6MTACuQjO.png) |
+| ![](https://i.loli.net/2019/10/28/FEj64UdqHV5JcOf.png) | ![](https://i.loli.net/2019/10/28/vzIUPRloLmSM3ur.png) | ![](https://i.loli.net/2019/10/28/1L5UFP96wXkqbJM.png) |
 
 ## 导入依赖
 
+```groovy
+repositories {
+    jcenter()
+}
+...
+dependencies {
+  
+}
 
+```
 
 ## LinearDecor
 
@@ -135,5 +144,5 @@ public class ShaderItemDecor extends AbsItemDecor {
     }
 })
 	//或者
-.filter(2,5)
+.filter(2,5,...)
 ```

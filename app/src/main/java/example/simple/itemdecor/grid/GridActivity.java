@@ -42,12 +42,12 @@ public class GridActivity extends AppCompatActivity {
 
         AbsItemDecor spaceItemDecor = new GridItemDecor()
                 .setMargin(20)
-                .filter(new FilterFun() {
-                    @Override
-                    public boolean exclude(int position) {
-                        return position == 1;
-                    }
-                })
+//                .filter(new FilterFun() {
+//                    @Override
+//                    public boolean exclude(int position) {
+//                        return position == 1;
+//                    }
+//                })
                 .build();
         rv_grid.addItemDecoration(spaceItemDecor);
 

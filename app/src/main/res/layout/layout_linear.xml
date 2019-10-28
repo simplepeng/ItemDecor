@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="LinearItemDecorator"
+        app:title="LinearItemDecor"
         android:background="@color/colorPrimary"
         app:navigationIcon="@drawable/nav_icon_back" />
 
