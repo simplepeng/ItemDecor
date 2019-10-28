@@ -2,6 +2,14 @@
 
 RecyclerView.ItemDecoration简易写法
 
+|                      LinearDecor                       |                     GridItemDecor                      |                   MultiTypeDecorator                   |
+| :----------------------------------------------------: | :----------------------------------------------------: | :----------------------------------------------------: |
+| ![](https://i.loli.net/2019/10/28/QCzFwHBYVc1ZOKn.png) | ![](https://i.loli.net/2019/10/28/rYUnTsjWE7t5PXd.png) | ![](https://i.loli.net/2019/10/28/t3mfny6MTACuQjO.png) |
+
+## 导入依赖
+
+
+
 ## LinearDecor
 
 ```java
