@@ -14,12 +14,12 @@ repositories {
 }
 ...
 dependencies {
-  
+  implementation 'me.simple:item-decor:1.0.0'
 }
 
 ```
 
-## LinearDecor
+## LinearItemDecor
 
 ```java
 AbsItemDecor itemDecor = new LinearItemDecor()
