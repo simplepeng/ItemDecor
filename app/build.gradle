@@ -37,6 +37,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
 //    implementation project(path: ':item_decor')
-//    implementation 'me.simple:item-decor:1.0.0'
-    implementation 'com.github.simplepeng:ItemDecor:v1.0.0'
+    implementation 'me.simple:item-decor:1.0.0'
 }
