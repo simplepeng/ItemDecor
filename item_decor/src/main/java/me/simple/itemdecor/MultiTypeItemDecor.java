@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
@@ -34,7 +35,10 @@ public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
                                RecyclerView parent, RecyclerView.State state) {
                 if (mFilterFun != null && mFilterFun.exclude(position)) return;
 
-                getItemDecoration(position).onDraw(canvas, position, bounds, itemView, parent, state);
+                AbsItemDecor itemDecor = getItemDecoration(position);
+                if (itemDecor == null)return;
+
+                itemDecor.onDraw(canvas, position, bounds, itemView, parent, state);
             }
 
             @Override
@@ -42,7 +46,10 @@ public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
                                    RecyclerView parent, RecyclerView.State state) {
                 if (mFilterFun != null && mFilterFun.exclude(position)) return;
 
-                getItemDecoration(position).onDrawOver(canvas, position, bounds, itemView, parent, state);
+                AbsItemDecor itemDecor = getItemDecoration(position);
+                if (itemDecor == null)return;
+
+                itemDecor.onDrawOver(canvas, position, bounds, itemView, parent, state);
             }
 
             @Override
@@ -53,12 +60,15 @@ public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
                     return;
                 }
 
-                getItemDecoration(position).setOutRect(outRect, position, itemView, parent, state);
+                AbsItemDecor itemDecor = getItemDecoration(position);
+                if (itemDecor == null)return;
+
+                itemDecor.setOutRect(outRect, position, itemView, parent, state);
             }
         };
     }
 
-    private AbsItemDecor getItemDecoration(int position) {
+    private @Nullable AbsItemDecor getItemDecoration(int position) {
         AbsItemDecor itemDecor;
 
         if (mLinker == null) {
@@ -67,9 +77,9 @@ public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
 
         itemDecor = mLinker.bind(position);
 
-        if (itemDecor == null) {
-            throw new NullPointerException("Do You Call register or withLinker Method ?");
-        }
+//        if (itemDecor == null) {
+//            throw new NullPointerException("Do You Call register or withLinker Method ?");
+//        }
         return itemDecor;
     }
 
