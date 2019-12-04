@@ -17,7 +17,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 import me.simple.itemdecor.AbsItemDecor;
 import me.simple.itemdecor.LinearItemDecor;
 import me.simple.itemdecor.Linker;
-import me.simple.itemdecor.MultiItemDecor;
+import me.simple.itemdecor.MultiTypeItemDecor;
 
 public class MultiTypeActivity extends AppCompatActivity {
 
@@ -62,12 +62,12 @@ public class MultiTypeActivity extends AppCompatActivity {
                 .build();
         final AbsItemDecor decoration5 = new ShaderItemDecor();
 
-        RecyclerView.ItemDecoration decoration = new MultiItemDecor()
-                .register(decoration1)
-                .register(decoration2)
-                .register(decoration3)
-                .register(decoration4)
-                .register(decoration5)
+        RecyclerView.ItemDecoration decoration = new MultiTypeItemDecor()
+//                .register(decoration1)
+//                .register(decoration2)
+//                .register(decoration3)
+//                .register(decoration4)
+//                .register(decoration5)
                 .withLinker(new Linker() {
                     @Override
                     public AbsItemDecor bind(int position) {

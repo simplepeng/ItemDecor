@@ -36,6 +36,6 @@ dependencies {
     implementation 'me.drakeet.multitype:multitype:3.4.4'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
-//    implementation project(path: ':item_decor')
-    implementation 'me.simple:item-decor:1.0.0'
+    implementation project(path: ':item_decor')
+//    implementation 'me.simple:item-decor:1.0.0'
 }

@@ -2,35 +2,34 @@ package me.simple.itemdecor;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.SparseArray;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MultiItemDecor implements IFilter<MultiItemDecor> {
+public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
 
-    private SparseArray<AbsItemDecor> mItemDecors = new SparseArray<>();
+//    private SparseArray<AbsItemDecor> mItemDecors = new SparseArray<>();
     private Linker mLinker;
     private FilterFun mFilterFun;
 
-    public <T extends AbsItemDecor> MultiItemDecor register(T itemDecoration) {
-        mItemDecors.put(itemDecoration.hashCode(), itemDecoration);
-        return this;
-    }
+//    public <T extends AbsItemDecor> MultiTypeItemDecor register(T itemDecoration) {
+//        mItemDecors.put(itemDecoration.hashCode(), itemDecoration);
+//        return this;
+//    }
 
-    public MultiItemDecor withLinker(Linker linker) {
+    public MultiTypeItemDecor withLinker(Linker linker) {
         this.mLinker = linker;
         return this;
     }
 
     @Override
-    public MultiItemDecor filter(FilterFun func) {
+    public MultiTypeItemDecor filter(FilterFun func) {
         this.mFilterFun = func;
         return this;
     }
 
     @Override
-    public MultiItemDecor filter(int... excludes) {
+    public MultiTypeItemDecor filter(int... excludes) {
         return this;
     }
 
@@ -66,21 +65,22 @@ public class MultiItemDecor implements IFilter<MultiItemDecor> {
     }
 
     private AbsItemDecor getItemDecoration(int position) {
-        AbsItemDecor itemDecoration;
-        if (mItemDecors.size() == 0) {
-            throw new NullPointerException("Do You Call Register Method ?");
-        }
+        AbsItemDecor itemDecor;
+//        if (mItemDecors.size() == 0) {
+//            throw new NullPointerException("Do You Call Register Method ?");
+//        }
         if (mLinker == null) {
             throw new NullPointerException("Do You Call withLinker Method ?");
         }
 
-        int hashCode = mLinker.bind(position).hashCode();
-        itemDecoration = mItemDecors.get(hashCode);
+//        int hashCode = mLinker.bind(position).hashCode();
+//        itemDecoration = mItemDecors.get(hashCode);
+        itemDecor = mLinker.bind(position);
 
-        if (itemDecoration == null) {
+        if (itemDecor == null) {
             throw new NullPointerException("Do You Call register or withLinker Method ?");
         }
-        return itemDecoration;
+        return itemDecor;
     }
 
 }
