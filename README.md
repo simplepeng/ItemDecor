@@ -14,7 +14,7 @@ repositories {
 }
 ...
 dependencies {
-  implementation 'me.simple:item-decor:1.0.0'
+  implementation 'me.simple:item-decor:1.0.1'
 }
 
 ```
@@ -70,12 +70,7 @@ final AbsItemDecor decoration4 = new LinearItemDecor()
                 .build();
 final AbsItemDecor decoration5 = new ShaderItemDecor();
 
-RecyclerView.ItemDecoration decoration = new MultiItemDecor()
-                .register(decoration1)
-                .register(decoration2)
-                .register(decoration3)
-                .register(decoration4)
-                .register(decoration5)
+RecyclerView.ItemDecoration decoration = new MultiTypeItemDecor()
                 .withLinker(new Linker() {
                     @Override
                     public AbsItemDecor bind(int position) {

@@ -8,14 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
 
-//    private SparseArray<AbsItemDecor> mItemDecors = new SparseArray<>();
     private Linker mLinker;
     private FilterFun mFilterFun;
-
-//    public <T extends AbsItemDecor> MultiTypeItemDecor register(T itemDecoration) {
-//        mItemDecors.put(itemDecoration.hashCode(), itemDecoration);
-//        return this;
-//    }
 
     public MultiTypeItemDecor withLinker(Linker linker) {
         this.mLinker = linker;
@@ -66,15 +60,11 @@ public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
 
     private AbsItemDecor getItemDecoration(int position) {
         AbsItemDecor itemDecor;
-//        if (mItemDecors.size() == 0) {
-//            throw new NullPointerException("Do You Call Register Method ?");
-//        }
+
         if (mLinker == null) {
             throw new NullPointerException("Do You Call withLinker Method ?");
         }
 
-//        int hashCode = mLinker.bind(position).hashCode();
-//        itemDecoration = mItemDecors.get(hashCode);
         itemDecor = mLinker.bind(position);
 
         if (itemDecor == null) {

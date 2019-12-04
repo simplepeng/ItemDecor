@@ -38,5 +38,5 @@ ext{
 
     groupId = "me.simple"
     artifactId = "item-decor"
-    publishVersion = "1.0.0"
+    publishVersion = "1.0.1"
 }

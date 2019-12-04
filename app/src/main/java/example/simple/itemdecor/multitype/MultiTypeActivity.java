@@ -63,11 +63,6 @@ public class MultiTypeActivity extends AppCompatActivity {
         final AbsItemDecor decoration5 = new ShaderItemDecor();
 
         RecyclerView.ItemDecoration decoration = new MultiTypeItemDecor()
-//                .register(decoration1)
-//                .register(decoration2)
-//                .register(decoration3)
-//                .register(decoration4)
-//                .register(decoration5)
                 .withLinker(new Linker() {
                     @Override
                     public AbsItemDecor bind(int position) {
