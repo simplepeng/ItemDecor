@@ -150,7 +150,7 @@ public class ShaderItemDecor extends AbsItemDecor {
 
 萌戳下方链接精准扶贫⤵️⤵️⤵️
 
-**[扶贫方式](https://simplepeng.github.io/merge_pay_code/)**
+**[扶贫方式](https://simplepeng.github.io/merge_pay_code/)** ---- **[赞助列表](https://github.com/simplepeng/Sponsor/blob/master/README.md)**
 
 ## 加入群聊：1078185041
 
