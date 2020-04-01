@@ -49,7 +49,7 @@ AbsItemDecor spaceItemDecor = new GridItemDecor()
 rv_grid.addItemDecoration(spaceItemDecor);
 ```
 
-## MultiItemDecor
+## MultiTypeItemDecor
 
 ```java
 final AbsItemDecor decoration1 = new LinearItemDecor()
@@ -127,7 +127,7 @@ public class ShaderItemDecor extends AbsItemDecor {
 }
 ```
 
-### 高级操作
+## 高级操作
 
 可以使用`filter`方法排除掉某些position的`ItemDecoration`，只能使用以下方法中的其中一个，不可同时使用。
 
@@ -141,3 +141,22 @@ public class ShaderItemDecor extends AbsItemDecor {
 	//或者
 .filter(2,5,...)
 ```
+
+## 赞助
+
+如果您觉得`ItemDecor`帮助到了您，可选择精准扶贫，要是`10.24`作者就在这里🙇🙇🙇啦！
+
+您的支持是作者继续努力创作的动力😁😁😁
+
+萌戳下方链接精准扶贫⤵️⤵️⤵️
+
+**[扶贫方式](https://simplepeng.github.io/merge_pay_code/)**
+
+## 加入群聊：1078185041
+
+<img src="https://raw.githubusercontent.com/simplepeng/ImageRepo/master/q_group.jpg" width="270px" height="370px">
+
+## 版本迭代
+
+* v1.0.1：修复bug
+* v1.0.0：首次上传
