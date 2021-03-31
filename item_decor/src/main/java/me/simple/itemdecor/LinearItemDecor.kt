@@ -1,254 +1,241 @@
-package me.simple.itemdecor;
+package me.simple.itemdecor
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.view.View;
+import android.graphics.*
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.HashSet;
-
-public class LinearItemDecor implements IFilter<LinearItemDecor> {
-
-    private Paint mPaint;
-    private RectF mLineRect = new RectF();
-
-    public static final int HORIZONTAL = 0;
-    public static final int VERTICAL = 1;
-    private int mOrientation = VERTICAL;
+class LinearItemDecor : IFilter<LinearItemDecor> {
+    private var mPaint: Paint
+    private val mLineRect = RectF()
+    private var mOrientation = VERTICAL
 
     /**
      * ItemDecoration的颜色
      */
-    private int mColor = Color.GRAY;
-    /**
-     *
-     */
-    private int mHeight = 1;
-    private int mWidth = 1;
-    /**
-     *
-     */
-    private float mMarginLeft;
-    private float mMarginTop;
-    private float mMarginRight;
-    private float mMarginBottom;
+    private var mColor = Color.GRAY
 
     /**
      *
      */
-    private FilterFun mFilterFun;
-    private HashSet<Integer> mExcludes;
+    private var mHeight = 1
+    private var mWidth = 1
+
+    /**
+     *
+     */
+    private var mMarginLeft = 0f
+    private var mMarginTop = 0f
+    private var mMarginRight = 0f
+    private var mMarginBottom = 0f
+
+    /**
+     *
+     */
+    private var mFilterFun: FilterFun? = null
+    private var mExcludes: HashSet<Int>? = null
+
     /**
      * 是否保存最后一个ItemDecoration
      */
-    private boolean mRetainLast = false;
+    private var mRetainLast = false
 
-    public LinearItemDecor() {
-        this(new Paint(Paint.ANTI_ALIAS_FLAG));
+    @JvmOverloads
+    constructor(paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)) {
+        paint.color = mColor
+        mPaint = paint
     }
 
-    public LinearItemDecor(Paint paint) {
-        paint.setColor(mColor);
-        this.mPaint = paint;
+    @JvmOverloads
+    constructor(mOrientation: Int, paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)) {
+        this.mOrientation = mOrientation
+        paint.color = mColor
+        mPaint = paint
     }
 
-    public LinearItemDecor(int mOrientation) {
-        this(mOrientation, new Paint(Paint.ANTI_ALIAS_FLAG));
+    fun setOrientation(orientation: Int): LinearItemDecor {
+        mOrientation = orientation
+        return this
     }
 
-    public LinearItemDecor(int mOrientation, Paint paint) {
-        this.mOrientation = mOrientation;
-        paint.setColor(mColor);
-        this.mPaint = paint;
+    fun setColor(color: Int): LinearItemDecor {
+        mColor = color
+        mPaint.color = mColor
+        return this
     }
 
-    public LinearItemDecor setOrientation(int orientation) {
-        this.mOrientation = orientation;
-        return this;
+    fun setHeight(height: Int): LinearItemDecor {
+        mHeight = height
+        return this
     }
 
-    public LinearItemDecor setColor(int color) {
-        this.mColor = color;
-        mPaint.setColor(mColor);
-        return this;
+    fun setWidth(width: Int): LinearItemDecor {
+        mWidth = width
+        return this
     }
 
-    public LinearItemDecor setHeight(int height) {
-        this.mHeight = height;
-        return this;
+    //    public LinearItemDecor setMargin(float margin) {
+    //        this.mMarginLeft = margin;
+    //        this.mMarginTop = margin;
+    //        this.mMarginRight = margin;
+    //        this.mMarginBottom = margin;
+    //        return this;
+    //    }
+    fun setMarginLeft(marginLeft: Float): LinearItemDecor {
+        mMarginLeft = marginLeft
+        return this
     }
 
-
-    public LinearItemDecor setWidth(int width) {
-        this.mWidth = width;
-        return this;
+    fun setMarginTop(marginTop: Float): LinearItemDecor {
+        mMarginTop = marginTop
+        return this
     }
 
-//    public LinearItemDecor setMargin(float margin) {
-//        this.mMarginLeft = margin;
-//        this.mMarginTop = margin;
-//        this.mMarginRight = margin;
-//        this.mMarginBottom = margin;
-//        return this;
-//    }
-
-    public LinearItemDecor setMarginLeft(float marginLeft) {
-        this.mMarginLeft = marginLeft;
-        return this;
+    fun setMarginRight(marginRight: Float): LinearItemDecor {
+        mMarginRight = marginRight
+        return this
     }
 
-    public LinearItemDecor setMarginTop(float marginTop) {
-        this.mMarginTop = marginTop;
-        return this;
+    fun setMarginBottom(marginBottom: Float): LinearItemDecor {
+        mMarginBottom = marginBottom
+        return this
     }
 
-    public LinearItemDecor setMarginRight(float marginRight) {
-        this.mMarginRight = marginRight;
-        return this;
+    fun setMarginHorizontal(margin: Float): LinearItemDecor {
+        mMarginLeft = margin
+        mMarginRight = margin
+        return this
     }
 
-    public LinearItemDecor setMarginBottom(float marginBottom) {
-        this.mMarginBottom = marginBottom;
-        return this;
+    fun setMarginVertical(margin: Float): LinearItemDecor {
+        mMarginTop = margin
+        mMarginBottom = margin
+        return this
     }
 
-    public LinearItemDecor setMarginHorizontal(float margin) {
-        this.mMarginLeft = margin;
-        this.mMarginRight = margin;
-        return this;
+    override fun filter(func: FilterFun?): LinearItemDecor {
+        mFilterFun = func
+        return this
     }
 
-    public LinearItemDecor setMarginVertical(float margin) {
-        this.mMarginTop = margin;
-        this.mMarginBottom = margin;
-        return this;
-    }
-
-    @Override
-    public LinearItemDecor filter(FilterFun func) {
-        this.mFilterFun = func;
-        return this;
-    }
-
-    @Override
-    public LinearItemDecor filter(int... excludes) {
-        mExcludes = new HashSet<>();
-        for (int exclude : excludes) {
-            mExcludes.add(exclude);
+    override fun filter(vararg excludes: Int): LinearItemDecor {
+        mExcludes = HashSet()
+        for (exclude in excludes) {
+            mExcludes!!.add(exclude)
         }
-        return this;
+        return this
     }
 
     /**
      * 保留最后一个ItemDecoration，默认不保留
      */
-    public LinearItemDecor retainLast() {
-        this.mRetainLast = true;
-        return this;
+    fun retainLast(): LinearItemDecor {
+        mRetainLast = true
+        return this
     }
 
-    public AbsItemDecor build() {
-        Utils.checkFilter(mFilterFun, mExcludes);
-        return new AbsItemDecor() {
-            @Override
-            public void onDraw(Canvas canvas, int position, Rect bounds, View itemView,
-                               RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFun != null && mFilterFun.exclude(position)) {
-                    return;
+    fun build(): AbsItemDecor {
+        Utils.checkFilter(mFilterFun, mExcludes)
+        return object : AbsItemDecor() {
+            override fun onDraw(
+                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
+                parent: RecyclerView, state: RecyclerView.State?
+            ) {
+                if (mFilterFun != null && mFilterFun!!.exclude(position)) {
+                    return
                 }
-
-                if (mExcludes != null && mExcludes.contains(position)) {
-                    return;
+                if (mExcludes != null && mExcludes!!.contains(position)) {
+                    return
                 }
-
-                if (!mRetainLast && parent.getAdapter() != null && position == parent.getAdapter().getItemCount() - 1) {
-                    return;
+                if (!mRetainLast && parent.adapter != null && position == parent.adapter!!
+                        .itemCount - 1
+                ) {
+                    return
                 }
-
                 if (mOrientation == VERTICAL) {
-                    drawVertical(canvas, itemView, bounds, parent);
+                    drawVertical(canvas, itemView, bounds, parent)
                 } else {
-                    drawHorizontal(canvas, itemView, bounds, parent);
+                    drawHorizontal(canvas, itemView, bounds, parent)
                 }
             }
 
-            @Override
-            public void onDrawOver(Canvas canvas, int position, Rect bounds, View itemView,
-                                   RecyclerView parent, RecyclerView.State state) {
-
+            override fun onDrawOver(
+                canvas: Canvas?, position: Int, bounds: Rect?, itemView: View?,
+                parent: RecyclerView?, state: RecyclerView.State?
+            ) {
             }
 
-            @Override
-            public void setOutRect(Rect outRect, int position, View itemView,
-                                   RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFun != null && mFilterFun.exclude(position)) {
-                    outRect.set(0, 0, 0, 0);
-                    return;
+            override fun setOutRect(
+                outRect: Rect, position: Int, itemView: View?,
+                parent: RecyclerView, state: RecyclerView.State?
+            ) {
+                if (mFilterFun != null && mFilterFun!!.exclude(position)) {
+                    outRect[0, 0, 0] = 0
+                    return
                 }
-
-                if (mExcludes != null && mExcludes.contains(position)) {
-                    outRect.set(0, 0, 0, 0);
-                    return;
+                if (mExcludes != null && mExcludes!!.contains(position)) {
+                    outRect[0, 0, 0] = 0
+                    return
                 }
-
-                if (!mRetainLast && parent.getAdapter() != null && position == parent.getAdapter().getItemCount() - 1) {
-                    outRect.set(0, 0, 0, 0);
-                    return;
+                if (!mRetainLast && parent.adapter != null && position == parent.adapter!!
+                        .itemCount - 1
+                ) {
+                    outRect[0, 0, 0] = 0
+                    return
                 }
-
                 if (mOrientation == VERTICAL) {
-                    outRect.set(0, 0, 0, mHeight);
+                    outRect[0, 0, 0] = mHeight
                 } else {
-                    outRect.set(0, 0, mWidth, 0);
+                    outRect[0, 0, mWidth] = 0
                 }
             }
-        };
-    }
-
-    private void drawVertical(Canvas canvas, View itemView, Rect bounds, RecyclerView parent) {
-        canvas.save();
-        int left;
-        int right;
-        if (parent.getClipToPadding()) {
-            left = parent.getPaddingLeft();
-            right = parent.getWidth() - parent.getPaddingRight();
-            canvas.clipRect(left, parent.getPaddingTop(), right, parent.getHeight() - parent.getPaddingBottom());
-        } else {
-            left = 0;
-            right = parent.getWidth();
         }
-        left += mMarginLeft;
-        right -= mMarginRight;
-        int bottom = bounds.bottom + Math.round(itemView.getTranslationY());
-        int top = bottom - mHeight;
-        mLineRect.set(left, top, right, bottom);
-        canvas.drawRect(mLineRect, mPaint);
-        canvas.restore();
     }
 
-    private void drawHorizontal(Canvas canvas, View itemView, Rect bounds, RecyclerView parent) {
-        canvas.save();
-        int top;
-        int bottom;
-        if (parent.getClipToPadding()) {
-            top = parent.getPaddingTop();
-            bottom = parent.getHeight() - parent.getPaddingBottom();
-            canvas.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(), bottom);
+    private fun drawVertical(canvas: Canvas, itemView: View, bounds: Rect, parent: RecyclerView) {
+        canvas.save()
+        var left: Int
+        var right: Int
+        if (parent.clipToPadding) {
+            left = parent.paddingLeft
+            right = parent.width - parent.paddingRight
+            canvas.clipRect(left, parent.paddingTop, right, parent.height - parent.paddingBottom)
         } else {
-            top = 0;
-            bottom = parent.getHeight();
+            left = 0
+            right = parent.width
         }
-        top += mMarginTop;
-        bottom -= mMarginBottom;
-        int right = bounds.right + Math.round(itemView.getTranslationX());
-        int left = right - mWidth;
-        mLineRect.set(left, top, right, bottom);
-        canvas.drawRect(mLineRect, mPaint);
-        canvas.restore();
+        left += mMarginLeft.toInt()
+        right -= mMarginRight.toInt()
+        val bottom = bounds.bottom + Math.round(itemView.translationY)
+        val top = bottom - mHeight
+        mLineRect[left.toFloat(), top.toFloat(), right.toFloat()] = bottom.toFloat()
+        canvas.drawRect(mLineRect, mPaint)
+        canvas.restore()
     }
 
+    private fun drawHorizontal(canvas: Canvas, itemView: View, bounds: Rect, parent: RecyclerView) {
+        canvas.save()
+        var top: Int
+        var bottom: Int
+        if (parent.clipToPadding) {
+            top = parent.paddingTop
+            bottom = parent.height - parent.paddingBottom
+            canvas.clipRect(parent.paddingLeft, top, parent.width - parent.paddingRight, bottom)
+        } else {
+            top = 0
+            bottom = parent.height
+        }
+        top += mMarginTop.toInt()
+        bottom -= mMarginBottom.toInt()
+        val right = bounds.right + Math.round(itemView.translationX)
+        val left = right - mWidth
+        mLineRect[left.toFloat(), top.toFloat(), right.toFloat()] = bottom.toFloat()
+        canvas.drawRect(mLineRect, mPaint)
+        canvas.restore()
+    }
+
+    companion object {
+        const val HORIZONTAL = 0
+        const val VERTICAL = 1
+    }
 }

@@ -1,86 +1,72 @@
-package me.simple.itemdecor;
+package me.simple.itemdecor
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.view.View;
+import android.graphics.Canvas
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class MultiTypeItemDecor implements IFilter<MultiTypeItemDecor> {
-
-    private Linker mLinker;
-    private FilterFun mFilterFun;
-
-    public MultiTypeItemDecor withLinker(Linker linker) {
-        this.mLinker = linker;
-        return this;
+class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
+    private var mLinker: Linker? = null
+    private var mFilterFun: FilterFun? = null
+    fun withLinker(linker: Linker?): MultiTypeItemDecor {
+        mLinker = linker
+        return this
     }
 
-    @Override
-    public MultiTypeItemDecor filter(FilterFun func) {
-        this.mFilterFun = func;
-        return this;
+    override fun filter(func: FilterFun?): MultiTypeItemDecor {
+        mFilterFun = func
+        return this
     }
 
-    @Override
-    public MultiTypeItemDecor filter(int... excludes) {
-        return this;
+    override fun filter(vararg excludes: Int): MultiTypeItemDecor {
+        return this
     }
 
-    public RecyclerView.ItemDecoration build() {
-        return new AbsItemDecor() {
-            @Override
-            public void onDraw(Canvas canvas, int position, Rect bounds, View itemView,
-                               RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFun != null && mFilterFun.exclude(position)) return;
-
-                AbsItemDecor itemDecor = getItemDecoration(position);
-                if (itemDecor == null)return;
-
-                itemDecor.onDraw(canvas, position, bounds, itemView, parent, state);
+    fun build(): ItemDecoration {
+        return object : AbsItemDecor() {
+            override fun onDraw(
+                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
+                parent: RecyclerView, state: RecyclerView.State?
+            ) {
+                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
+                val itemDecor = getItemDecoration(position) ?: return
+                itemDecor.onDraw(canvas, position, bounds, itemView, parent, state)
             }
 
-            @Override
-            public void onDrawOver(Canvas canvas, int position, Rect bounds, View itemView,
-                                   RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFun != null && mFilterFun.exclude(position)) return;
-
-                AbsItemDecor itemDecor = getItemDecoration(position);
-                if (itemDecor == null)return;
-
-                itemDecor.onDrawOver(canvas, position, bounds, itemView, parent, state);
+            override fun onDrawOver(
+                canvas: Canvas?, position: Int, bounds: Rect?, itemView: View?,
+                parent: RecyclerView?, state: RecyclerView.State?
+            ) {
+                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
+                val itemDecor = getItemDecoration(position) ?: return
+                itemDecor.onDrawOver(canvas, position, bounds, itemView, parent, state)
             }
 
-            @Override
-            public void setOutRect(Rect outRect, int position, View itemView,
-                                   RecyclerView parent, RecyclerView.State state) {
-                if (mFilterFun != null && mFilterFun.exclude(position)) {
-                    outRect.set(0, 0, 0, 0);
-                    return;
+            override fun setOutRect(
+                outRect: Rect, position: Int, itemView: View?,
+                parent: RecyclerView, state: RecyclerView.State?
+            ) {
+                if (mFilterFun != null && mFilterFun!!.exclude(position)) {
+                    outRect[0, 0, 0] = 0
+                    return
                 }
-
-                AbsItemDecor itemDecor = getItemDecoration(position);
-                if (itemDecor == null)return;
-
-                itemDecor.setOutRect(outRect, position, itemView, parent, state);
+                val itemDecor = getItemDecoration(position) ?: return
+                itemDecor.setOutRect(outRect, position, itemView, parent, state)
             }
-        };
+        }
     }
 
-    private @Nullable AbsItemDecor getItemDecoration(int position) {
-        AbsItemDecor itemDecor;
-
+    private fun getItemDecoration(position: Int): AbsItemDecor? {
+        val itemDecor: AbsItemDecor?
         if (mLinker == null) {
-            throw new NullPointerException("Do You Call withLinker Method ?");
+            throw NullPointerException("Do You Call withLinker Method ?")
         }
-
-        itemDecor = mLinker.bind(position);
+        itemDecor = mLinker!!.bind(position)
 
 //        if (itemDecor == null) {
 //            throw new NullPointerException("Do You Call register or withLinker Method ?");
 //        }
-        return itemDecor;
+        return itemDecor
     }
-
 }

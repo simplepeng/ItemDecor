@@ -1,8 +1,5 @@
-package me.simple.itemdecor;
+package me.simple.itemdecor
 
-import androidx.annotation.Nullable;
-
-public interface Linker {
-    @Nullable
-    AbsItemDecor bind(int position);
+interface Linker {
+    fun bind(position: Int): AbsItemDecor?
 }

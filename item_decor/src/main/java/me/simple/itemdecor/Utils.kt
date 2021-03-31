@@ -1,11 +1,9 @@
-package me.simple.itemdecor;
+package me.simple.itemdecor
 
-import java.util.HashSet;
+import java.util.*
 
-class Utils {
-    public static void checkFilter(FilterFun fun, HashSet<Integer> excludes) {
-        if (fun != null && excludes != null) {
-            throw new IllegalArgumentException("'filter' method just can be use one");
-        }
+internal object Utils {
+    fun checkFilter(`fun`: FilterFun?, excludes: HashSet<Int>?) {
+        require(!(`fun` != null && excludes != null)) { "'filter' method just can be use one" }
     }
 }

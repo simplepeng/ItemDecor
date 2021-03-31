@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'
 
@@ -28,7 +29,8 @@ uploadArchives {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "androidx.recyclerview:recyclerview:1.1.0"
 }
 
 publish {
@@ -38,4 +40,7 @@ publish {
     publishVersion = rootProject.ext.publishVersion
     desc = 'RecyclerView.ItemDecoration的简易写法'
     website = 'https://github.com/simplepeng/ItemDecor'
+}
+repositories {
+    mavenCentral()
 }

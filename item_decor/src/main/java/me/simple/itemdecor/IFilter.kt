@@ -1,7 +1,6 @@
-package me.simple.itemdecor;
+package me.simple.itemdecor
 
-public interface IFilter<T> {
-    T filter(FilterFun func);
-
-    T filter(int... excludes);
+interface IFilter<T> {
+    fun filter(func: FilterFun?): T
+    fun filter(vararg excludes: Int): T
 }
