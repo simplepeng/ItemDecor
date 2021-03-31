@@ -6,6 +6,20 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 class LinearItemDecor : IFilter<LinearItemDecor> {
+
+    @JvmOverloads
+    constructor(paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)) {
+        paint.color = mColor
+        mPaint = paint
+    }
+
+    @JvmOverloads
+    constructor(mOrientation: Int, paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)) {
+        this.mOrientation = mOrientation
+        paint.color = mColor
+        mPaint = paint
+    }
+
     private var mPaint: Paint
     private val mLineRect = RectF()
     private var mOrientation = VERTICAL
@@ -39,19 +53,6 @@ class LinearItemDecor : IFilter<LinearItemDecor> {
      * 是否保存最后一个ItemDecoration
      */
     private var mRetainLast = false
-
-    @JvmOverloads
-    constructor(paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)) {
-        paint.color = mColor
-        mPaint = paint
-    }
-
-    @JvmOverloads
-    constructor(mOrientation: Int, paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)) {
-        this.mOrientation = mOrientation
-        paint.color = mColor
-        mPaint = paint
-    }
 
     fun setOrientation(orientation: Int): LinearItemDecor {
         mOrientation = orientation

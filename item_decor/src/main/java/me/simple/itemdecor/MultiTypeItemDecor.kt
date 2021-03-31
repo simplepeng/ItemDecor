@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
+
     private var mLinker: Linker? = null
     private var mFilterFun: FilterFun? = null
+
     fun withLinker(linker: Linker?): MultiTypeItemDecor {
         mLinker = linker
         return this
@@ -58,7 +60,9 @@ class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
     }
 
     private fun getItemDecoration(position: Int): AbsItemDecor? {
+
         val itemDecor: AbsItemDecor?
+
         if (mLinker == null) {
             throw NullPointerException("Do You Call withLinker Method ?")
         }

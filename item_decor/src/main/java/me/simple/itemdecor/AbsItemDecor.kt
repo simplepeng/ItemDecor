@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 abstract class AbsItemDecor : ItemDecoration() {
+
     protected var mBounds = Rect()
+
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
         if (parent.layoutManager == null || parent.adapter == null || parent.adapter!!.itemCount == 0) return

@@ -20,6 +20,7 @@ class GridItemDecor : IFilter<GridItemDecor> {
      */
     private var mFilterFun: FilterFun? = null
     private var mExcludes: HashSet<Int>? = null
+
     fun setMargin(margin: Int): GridItemDecor {
         mMarginLeft = margin
         mMarginTop = margin
