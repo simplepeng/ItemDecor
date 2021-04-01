@@ -50,9 +50,8 @@ public class LinearActivity extends AppCompatActivity {
         RecyclerView rv_horizontal = findViewById(R.id.rv_horizontal);
         rv_horizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        AbsItemDecor itemDecor = new LinearItemDecor(LinearItemDecor.HORIZONTAL)
-                .setWidth(20)
-                .build();
+        LinearItemDecor itemDecor = new LinearItemDecor();
+        itemDecor.setSize(20);
         rv_horizontal.addItemDecoration(itemDecor);
 
         rv_horizontal.setAdapter(mHorizontalAdapter);
@@ -65,13 +64,12 @@ public class LinearActivity extends AppCompatActivity {
         RecyclerView rv_vertical = findViewById(R.id.rv_vertical);
         rv_vertical.setLayoutManager(new LinearLayoutManager(this));
 
-        AbsItemDecor itemDecor = new LinearItemDecor()
-                .setHeight(10)
-                .setColor(Color.BLACK)
-                .filter(2,5)
-                .retainLast()
-                .setMarginHorizontal(33.5f)
-                .build();
+        LinearItemDecor itemDecor = new LinearItemDecor();
+        itemDecor.setSize(10);
+        itemDecor.setColor(Color.BLACK);
+        itemDecor.filter(2,5);
+        itemDecor.setRetainLast(true);
+        itemDecor.setMargin(33.5f);
         rv_vertical.addItemDecoration(itemDecor);
 
         rv_vertical.setAdapter(mVerticalAdapter);

@@ -44,22 +44,22 @@ public class MultiTypeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
 
-        final AbsItemDecor decoration1 = new LinearItemDecor()
-                .setHeight(20)
-                .setColor(Color.LTGRAY)
-                .build();
-        final AbsItemDecor decoration2 = new LinearItemDecor()
-                .setColor(Color.BLACK)
-                .build();
-        final AbsItemDecor decoration3 = new LinearItemDecor()
-                .setColor(Color.RED)
-                .setMarginLeft(45)
-                .build();
-        final AbsItemDecor decoration4 = new LinearItemDecor()
-                .setColor(Color.GREEN)
-                .setHeight(3)
-                .setMarginHorizontal(115)
-                .build();
+        final LinearItemDecor decoration1 = new LinearItemDecor();
+        decoration1.setSize(20);
+        decoration1.setColor(Color.LTGRAY);
+
+        final LinearItemDecor decoration2 = new LinearItemDecor();
+        decoration2.setColor(Color.BLACK);
+
+        final LinearItemDecor decoration3 = new LinearItemDecor();
+        decoration3 .setColor(Color.RED);
+        decoration3.setMarginStart(45);
+
+        final LinearItemDecor decoration4 = new LinearItemDecor();
+        decoration4.setColor(Color.GREEN);
+        decoration4.setSize(3);
+        decoration4.setMargin(115);
+
         final AbsItemDecor decoration5 = new ShaderItemDecor();
 
         RecyclerView.ItemDecoration decoration = new MultiTypeItemDecor()

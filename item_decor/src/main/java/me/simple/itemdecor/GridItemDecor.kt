@@ -49,7 +49,7 @@ class GridItemDecor : IFilter<GridItemDecor> {
         return this
     }
 
-    override fun filter(func: FilterFun?): GridItemDecor {
+    override fun filter(func: FilterFun): GridItemDecor {
         mFilterFun = func
         return this
     }
@@ -67,19 +67,19 @@ class GridItemDecor : IFilter<GridItemDecor> {
         return object : AbsItemDecor() {
             override fun onDraw(
                 canvas: Canvas, position: Int, bounds: Rect, itemView: View,
-                parent: RecyclerView, state: RecyclerView.State?
+                parent: RecyclerView, state: RecyclerView.State
             ) {
             }
 
             override fun onDrawOver(
-                canvas: Canvas?, position: Int, bounds: Rect?, itemView: View?,
-                parent: RecyclerView?, state: RecyclerView.State?
+                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
+                parent: RecyclerView, state: RecyclerView.State
             ) {
             }
 
             override fun setOutRect(
-                outRect: Rect, position: Int, itemView: View?,
-                parent: RecyclerView, state: RecyclerView.State?
+                outRect: Rect, position: Int, itemView: View,
+                parent: RecyclerView, state: RecyclerView.State
             ) {
                 if (mFilterFun != null && mFilterFun!!.exclude(position)) {
                     outRect[0, 0, 0] = 0

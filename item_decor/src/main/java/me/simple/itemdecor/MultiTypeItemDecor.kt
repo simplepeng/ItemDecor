@@ -16,7 +16,7 @@ class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
         return this
     }
 
-    override fun filter(func: FilterFun?): MultiTypeItemDecor {
+    override fun filter(func: FilterFun): MultiTypeItemDecor {
         mFilterFun = func
         return this
     }
@@ -29,7 +29,7 @@ class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
         return object : AbsItemDecor() {
             override fun onDraw(
                 canvas: Canvas, position: Int, bounds: Rect, itemView: View,
-                parent: RecyclerView, state: RecyclerView.State?
+                parent: RecyclerView, state: RecyclerView.State
             ) {
                 if (mFilterFun != null && mFilterFun!!.exclude(position)) return
                 val itemDecor = getItemDecoration(position) ?: return
@@ -37,8 +37,8 @@ class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
             }
 
             override fun onDrawOver(
-                canvas: Canvas?, position: Int, bounds: Rect?, itemView: View?,
-                parent: RecyclerView?, state: RecyclerView.State?
+                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
+                parent: RecyclerView, state: RecyclerView.State
             ) {
                 if (mFilterFun != null && mFilterFun!!.exclude(position)) return
                 val itemDecor = getItemDecoration(position) ?: return
@@ -46,8 +46,8 @@ class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
             }
 
             override fun setOutRect(
-                outRect: Rect, position: Int, itemView: View?,
-                parent: RecyclerView, state: RecyclerView.State?
+                outRect: Rect, position: Int, itemView: View,
+                parent: RecyclerView, state: RecyclerView.State
             ) {
                 if (mFilterFun != null && mFilterFun!!.exclude(position)) {
                     outRect[0, 0, 0] = 0
