@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.math.roundToInt
 
-class LinearItemDecor : AbsItemDecor(), IFilter<LinearItemDecor> {
+class LinearItemDecor : AbsItemDecor() {
 
     companion object {
         const val HORIZONTAL = 0
@@ -38,25 +38,34 @@ class LinearItemDecor : AbsItemDecor(), IFilter<LinearItemDecor> {
     var marginStart = 0f
     var marginEnd = 0f
 
-    //
-    private var mFilterFun: FilterFun? = null
-    private var mExcludes: HashSet<Int>? = null
+    //要过滤掉的divider
+//    private var mFilterFun: FilterFun? = null
+//    var mExcludes: HashSet<Int>? = null
+    private var filterBlock: ((position: Int) -> Boolean)? = null
 
     //是否保存最后一个divider
     var retainLast = false
 
-    override fun filter(func: FilterFun): LinearItemDecor {
-        mFilterFun = func
-        return this
+//    fun filter(func: FilterFun) {
+//        mFilterFun = func
+//    }
+
+    fun filter(block: (position: Int) -> Boolean) {
+        this.filterBlock = block
     }
 
-    override fun filter(vararg excludes: Int): LinearItemDecor {
-        mExcludes = HashSet()
-        for (exclude in excludes) {
-            mExcludes!!.add(exclude)
+    fun filter(vararg filters: Int) {
+        filter { position ->
+            filters.contains(position)
         }
-        return this
     }
+
+//    fun filter(vararg excludes: Int) {
+//        mExcludes = HashSet()
+//        for (exclude in excludes) {
+//            mExcludes!!.add(exclude)
+//        }
+//    }
 
     override fun onDraw(
         canvas: Canvas,
@@ -66,17 +75,15 @@ class LinearItemDecor : AbsItemDecor(), IFilter<LinearItemDecor> {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        if (mFilterFun != null && mFilterFun!!.exclude(position)) {
+        //
+        if (filterBlock?.invoke(position) == true) {
             return
         }
-        if (mExcludes != null && mExcludes!!.contains(position)) {
+        //
+        if (!retainLast && position == parent.adapter!!.itemCount - 1) {
             return
         }
-        if (!retainLast && parent.adapter != null && position == parent.adapter!!
-                .itemCount - 1
-        ) {
-            return
-        }
+        //
         if (orientation == VERTICAL) {
             drawVertical(canvas, itemView, bounds, parent)
         } else {
@@ -91,25 +98,22 @@ class LinearItemDecor : AbsItemDecor(), IFilter<LinearItemDecor> {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        if (mFilterFun != null && mFilterFun!!.exclude(position)) {
-            outRect[0, 0, 0] = 0
+        //
+        if (filterBlock?.invoke(position) == true) {
+            outRect.set(0, 0, 0, 0)
             return
         }
-        if (mExcludes != null && mExcludes!!.contains(position)) {
-            outRect[0, 0, 0] = 0
+        //
+        if (!retainLast && position == parent.adapter!!.itemCount - 1) {
+            outRect.set(0, 0, 0, 0)
             return
         }
-        if (!retainLast && parent.adapter != null && position == parent.adapter!!
-                .itemCount - 1
-        ) {
-            outRect[0, 0, 0] = 0
-            return
-        }
+        //
         if (orientation == VERTICAL) {
             outRect.set(0, 0, 0, size)
             outRect[0, 0, 0] = size
         } else {
-            outRect[0, 0, size] = 0
+            outRect.set(0, 0, size, 0)
         }
     }
 

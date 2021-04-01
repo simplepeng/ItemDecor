@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import example.simple.itemdecor.R;
+import kotlin.jvm.functions.Function1;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.simple.itemdecor.AbsItemDecor;
@@ -51,6 +52,7 @@ public class LinearActivity extends AppCompatActivity {
         rv_horizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         LinearItemDecor itemDecor = new LinearItemDecor();
+        itemDecor.setOrientation(LinearItemDecor.HORIZONTAL);
         itemDecor.setSize(20);
         rv_horizontal.addItemDecoration(itemDecor);
 
@@ -67,7 +69,13 @@ public class LinearActivity extends AppCompatActivity {
         LinearItemDecor itemDecor = new LinearItemDecor();
         itemDecor.setSize(10);
         itemDecor.setColor(Color.BLACK);
-        itemDecor.filter(2,5);
+//        itemDecor.filter(1, 3);
+        itemDecor.filter(new Function1<Integer, Boolean>() {
+            @Override
+            public Boolean invoke(Integer integer) {
+                return integer % 2 == 0;
+            }
+        });
         itemDecor.setRetainLast(true);
         itemDecor.setMargin(33.5f);
         rv_vertical.addItemDecoration(itemDecor);
