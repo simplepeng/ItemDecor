@@ -52,6 +52,17 @@ class MultiTypeActivity : AppCompatActivity() {
 
         val decoration5: AbsItemDecor = ShaderItemDecor()
 
+        val multiTypeItemDecor = MultiTypeItemDecor { position ->
+            when (position) {
+                0 -> decoration3
+                1 -> decoration2
+                2 -> decoration4
+                3 -> decoration5
+                else -> decoration1
+            }
+        }
+        recyclerView.addItemDecoration(multiTypeItemDecor)
+        //扩展函数
         recyclerView.multiType { position ->
             when (position) {
                 0 -> decoration3
@@ -61,16 +72,6 @@ class MultiTypeActivity : AppCompatActivity() {
                 else -> decoration1
             }
         }
-//        val multiTypeItemDecor = MultiTypeItemDecor { position ->
-//            when (position) {
-//                0 -> decoration3
-//                1 -> decoration2
-//                2 -> decoration4
-//                3 -> decoration5
-//                else -> decoration1
-//            }
-//        }
-//        recyclerView.addItemDecoration(multiTypeItemDecor)
 
         mItems.add(MultiTypeHeaderBean())
         mItems.add(MultiTypeItemBean())

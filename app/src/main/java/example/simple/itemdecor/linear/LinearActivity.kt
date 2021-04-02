@@ -55,17 +55,22 @@ class LinearActivity : AppCompatActivity() {
         val rvVertical = findViewById<RecyclerView>(R.id.rv_vertical)
         rvVertical.layoutManager = LinearLayoutManager(this)
 
+        val itemDecor = LinearItemDecor().apply {
+            size = 10
+            color = Color.BLACK
+            retainLast = true//
+            margin = 33.5f
+        }
+        //过滤点不需要显示的divider
+        itemDecor.filter(0, 1, 2)
+        //或
+        itemDecor.filter { position: Int ->
+            position % 2 == 0
+        }
+        rvVertical.addItemDecoration(itemDecor)
+
+        //高级点，使用KT扩展函数
         rvVertical.divider(Color.RED, 10, 20f, 100f)
-//        val itemDecor = LinearItemDecor()
-//        itemDecor.size = 10
-//        itemDecor.color = Color.BLACK
-//        itemDecor.filter { integer: Int ->
-//            Log.d("LinearActivity", "position == $integer")
-//            integer % 2 == 0
-//        }
-//        itemDecor.retainLast = true
-//        itemDecor.margin = 33.5f
-//        rvVertical.addItemDecoration(itemDecor)
 
         rvVertical.adapter = mVerticalAdapter
         addVerticalData()

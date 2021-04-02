@@ -28,10 +28,11 @@ class GridActivity : AppCompatActivity() {
         rvGrid.layoutManager = GridLayoutManager(this, 4)
         rvGrid.adapter = mAdapter
 
-//        val spaceItemDecor = GridItemDecor().apply {
-//            margin = 10
-//        }
-//        rvGrid.addItemDecoration(spaceItemDecor)
+        val spaceItemDecor = GridItemDecor().apply {
+            margin = 10
+        }
+        rvGrid.addItemDecoration(spaceItemDecor)
+        //扩展函数
         rvGrid.space(10)
 
         for (i in 0..4) {

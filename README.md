@@ -1,6 +1,6 @@
 # ItemDecor
 
-RecyclerView.ItemDecoration的简易写法
+RecyclerView.ItemDecoration的简易写法，轻松实现RecyclerView的Divider。
 
 |                    LinearItemDecor                     |                     GridItemDecor                      |                     MultiItemDecor                     |
 | :----------------------------------------------------: | :----------------------------------------------------: | :----------------------------------------------------: |
@@ -22,124 +22,124 @@ dependencies {
 ## LinearItemDecor
 
 ```java
-AbsItemDecor itemDecor = new LinearItemDecor()
-                .setHeight(10)
-                .setColor(Color.BLACK)
-                .filter(2,5)
-                .retainLast()//保留最后一个ItemDecoration，默认不保留
-                .setMarginHorizontal(33.5f)
-                .build();
-rv_vertical.addItemDecoration(itemDecor);
+val itemDecor = LinearItemDecor().apply {
+    size = 10
+    color = Color.BLACK
+    retainLast = true//
+    margin = 33.5f
+}
+//过滤点不需要显示的divider
+itemDecor.filter(0, 1, 2)
+//或
+itemDecor.filter { position: Int ->
+    position % 2 == 0
+}
+rvVertical.addItemDecoration(itemDecor)
+  
+//高级点，使用KT扩展函数
+rvVertical.divider(Color.RED, 10, 20f, 100f)
 ```
 
-默认最后的`ItemDecoration`是没有画出来的，可以使用`retainLast()`方法保留最后一个ItemDecoration
+默认最后的`ItemDecoration`是没有画出来的，可以使用`retainLast`属性保留最后一个。
+
+`filter`方法可以用来过滤掉不需要显示的`ItemDecoration`。
 
 ## GridItemDecor
 
 ```java
-AbsItemDecor spaceItemDecor = new GridItemDecor()
-                .setMargin(20)
-                .filter(new FilterFun() {
-                    @Override
-                    public boolean exclude(int position) {
-                       return position == 1;
-                    }
-                })
-                .build();
-rv_grid.addItemDecoration(spaceItemDecor);
+val spaceItemDecor = GridItemDecor().apply {
+    margin = 10
+}
+rvGrid.addItemDecoration(spaceItemDecor)
+//扩展函数
+rvGrid.space(10)
 ```
 
 ## MultiTypeItemDecor
 
 ```java
-final AbsItemDecor decoration1 = new LinearItemDecor()
-                .setHeight(20)
-                .setColor(Color.LTGRAY)
-                .build();
-final AbsItemDecor decoration2 = new LinearItemDecor()
-                .setColor(Color.BLACK)
-                .build();
-final AbsItemDecor decoration3 = new LinearItemDecor()
-                .setColor(Color.RED)
-                .setMarginLeft(45)
-                .build();
-final AbsItemDecor decoration4 = new LinearItemDecor()
-                .setColor(Color.GREEN)
-                .setHeight(3)
-                .setMarginHorizontal(115)
-                .build();
-final AbsItemDecor decoration5 = new ShaderItemDecor();
+val decoration1 = LinearItemDecor()
+decoration1.size = 20
+decoration1.color = Color.LTGRAY
 
-RecyclerView.ItemDecoration decoration = new MultiTypeItemDecor()
-                .withLinker(new Linker() {
-                    @Override
-                    public AbsItemDecor bind(int position) {
-                        switch (position) {
-                            case 0:
-                                return decoration3;
-                            case 1:
-                                return decoration2;
-                            case 2:
-                                return decoration4;
-                            case 3:
-                                return decoration5;
-                        }
-                        return decoration1;
-                    }
-                })
-                .build();
-recyclerView.addItemDecoration(decoration);
-```
+val decoration2 = LinearItemDecor()
+decoration2.color = Color.BLACK
 
-## 自定义
+val decoration3 = LinearItemDecor()
+decoration3.color = Color.BLUE
+decoration3.size = 20
 
-```java
-public class ShaderItemDecor extends AbsItemDecor {
+val decoration4 = LinearItemDecor()
+decoration4.color = Color.GREEN
+decoration4.size = 3
+decoration4.margin = 115f
 
-    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private int mHeight = 50;
+val decoration5: AbsItemDecor = ShaderItemDecor()
 
-    @Override
-    public void onDraw(Canvas canvas, int position,
-                       Rect bounds, View itemView,
-                       RecyclerView parent, RecyclerView.State state) {
-
-        mPaint.setShader(new LinearGradient(0, 0, parent.getWidth(), 50, Color.YELLOW, Color.GREEN, Shader.TileMode.CLAMP));
-        int bottom = bounds.bottom + Math.round(itemView.getTranslationY());
-        int top = bottom - mHeight;
-        canvas.drawRect(new Rect(0, top, parent.getWidth(), bottom), mPaint);
-
+val multiTypeItemDecor = MultiTypeItemDecor { position ->
+    when (position) {
+        0 -> decoration3
+        1 -> decoration2
+        2 -> decoration4
+        3 -> decoration5
+        else -> decoration1
     }
-
-    @Override
-    public void onDrawOver(Canvas canvas, int position,
-                           Rect bounds, View itemView,
-                           RecyclerView parent, RecyclerView.State state) {
-
-    }
-
-    @Override
-    public void setOutRect(Rect outRect, int position,
-                           View itemView,
-                           RecyclerView parent, RecyclerView.State state) {
-        outRect.set(0, 0, 0, mHeight);
+}
+recyclerView.addItemDecoration(multiTypeItemDecor)
+//扩展函数
+recyclerView.multiType { position ->
+    when (position) {
+        0 -> decoration3
+        1 -> decoration2
+        2 -> decoration4
+        3 -> decoration5
+        else -> decoration1
     }
 }
 ```
 
-## 高级操作
-
-可以使用`filter`方法排除掉某些position的`ItemDecoration`，只能使用以下方法中的其中一个，不可同时使用。
+## 自定义ItemDecor
 
 ```java
-.filter(new FilterFun() {
-    @Override
-    public boolean exclude(int position) {
-        return position == 2 || position == 5;
+class ShaderItemDecor : AbsItemDecor() {
+
+    private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val mHeight = 50
+
+    override fun onDraw(
+        canvas: Canvas, position: Int,
+        bounds: Rect, itemView: View,
+        parent: RecyclerView, state: RecyclerView.State
+    ) {
+        mPaint.shader = LinearGradient(
+            0f,
+            0f,
+            parent.width.toFloat(),
+            50f,
+            Color.YELLOW,
+            Color.GREEN,
+            Shader.TileMode.CLAMP
+        )
+        val bottom = bounds.bottom + Math.round(itemView.translationY)
+        val top = bottom - mHeight
+        canvas.drawRect(Rect(0, top, parent.width, bottom), mPaint)
     }
-})
-	//或者
-.filter(2,5,...)
+
+    override fun onDrawOver(
+        canvas: Canvas, position: Int,
+        bounds: Rect, itemView: View,
+        parent: RecyclerView, state: RecyclerView.State
+    ) {
+    }
+
+    override fun setOutRect(
+        outRect: Rect, position: Int,
+        itemView: View,
+        parent: RecyclerView, state: RecyclerView.State
+    ) {
+        outRect[0, 0, 0] = mHeight
+    }
+}
 ```
 
 ## 赞助
@@ -152,11 +152,12 @@ public class ShaderItemDecor extends AbsItemDecor {
 
 **[扶贫方式](https://simplepeng.github.io/merge_pay_code/)** ---- **[赞助列表](https://github.com/simplepeng/Sponsor/blob/master/README.md)**
 
-## 加入群聊：1078185041
+## 问题反馈
 
-<img src="https://raw.githubusercontent.com/simplepeng/ImageRepo/master/q_group.jpg" width="270px" height="370px">
+尽量先提issue，实在无解再加QQ群：1078185041
 
 ## 版本迭代
 
+* v1.0.2：升级为KT，写法更轻松。
 * v1.0.1：修复bug
 * v1.0.0：首次上传
