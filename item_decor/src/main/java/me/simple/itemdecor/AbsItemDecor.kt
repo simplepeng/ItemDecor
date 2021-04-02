@@ -5,7 +5,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-open class AbsItemDecor : RecyclerView.ItemDecoration() {
+abstract class AbsItemDecor : RecyclerView.ItemDecoration(), IFilter {
 
     private var bounds = Rect()
 

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.math.roundToInt
 
-class LinearItemDecor : AbsItemDecor(), IFilter {
+class LinearItemDecor : AbsItemDecor(){
 
     companion object {
         const val HORIZONTAL = 0

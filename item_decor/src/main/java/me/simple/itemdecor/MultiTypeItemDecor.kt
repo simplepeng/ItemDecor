@@ -25,52 +25,52 @@ class MultiTypeItemDecor  {
 //        return this
 //    }
 
-    fun build(): ItemDecoration {
-        return object : AbsItemDecor() {
-            override fun onDraw(
-                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
-                parent: RecyclerView, state: RecyclerView.State
-            ) {
-                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
-                val itemDecor = getItemDecoration(position) ?: return
-                itemDecor.onDraw(canvas, position, bounds, itemView, parent, state)
-            }
-
-            override fun onDrawOver(
-                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
-                parent: RecyclerView, state: RecyclerView.State
-            ) {
-                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
-                val itemDecor = getItemDecoration(position) ?: return
-                itemDecor.onDrawOver(canvas, position, bounds, itemView, parent, state)
-            }
-
-            override fun setOutRect(
-                outRect: Rect, position: Int, itemView: View,
-                parent: RecyclerView, state: RecyclerView.State
-            ) {
-                if (mFilterFun != null && mFilterFun!!.exclude(position)) {
-                    outRect[0, 0, 0] = 0
-                    return
-                }
-                val itemDecor = getItemDecoration(position) ?: return
-                itemDecor.setOutRect(outRect, position, itemView, parent, state)
-            }
-        }
-    }
-
-    private fun getItemDecoration(position: Int): AbsItemDecor? {
-
-        val itemDecor: AbsItemDecor?
-
-        if (mLinker == null) {
-            throw NullPointerException("Do You Call withLinker Method ?")
-        }
-        itemDecor = mLinker!!.bind(position)
-
-//        if (itemDecor == null) {
-//            throw new NullPointerException("Do You Call register or withLinker Method ?");
+//    fun build(): ItemDecoration {
+//        return object : AbsItemDecor() {
+//            override fun onDraw(
+//                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
+//                parent: RecyclerView, state: RecyclerView.State
+//            ) {
+//                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
+//                val itemDecor = getItemDecoration(position) ?: return
+//                itemDecor.onDraw(canvas, position, bounds, itemView, parent, state)
+//            }
+//
+//            override fun onDrawOver(
+//                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
+//                parent: RecyclerView, state: RecyclerView.State
+//            ) {
+//                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
+//                val itemDecor = getItemDecoration(position) ?: return
+//                itemDecor.onDrawOver(canvas, position, bounds, itemView, parent, state)
+//            }
+//
+//            override fun setOutRect(
+//                outRect: Rect, position: Int, itemView: View,
+//                parent: RecyclerView, state: RecyclerView.State
+//            ) {
+//                if (mFilterFun != null && mFilterFun!!.exclude(position)) {
+//                    outRect[0, 0, 0] = 0
+//                    return
+//                }
+//                val itemDecor = getItemDecoration(position) ?: return
+//                itemDecor.setOutRect(outRect, position, itemView, parent, state)
+//            }
 //        }
-        return itemDecor
-    }
+//    }
+//
+//    private fun getItemDecoration(position: Int): AbsItemDecor? {
+//
+//        val itemDecor: AbsItemDecor?
+//
+//        if (mLinker == null) {
+//            throw NullPointerException("Do You Call withLinker Method ?")
+//        }
+//        itemDecor = mLinker!!.bind(position)
+//
+////        if (itemDecor == null) {
+////            throw new NullPointerException("Do You Call register or withLinker Method ?");
+////        }
+//        return itemDecor
+//    }
 }

@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import me.simple.itemdecor.AbsItemDecor
 
 class ShaderItemDecor : AbsItemDecor() {
+
     private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val mHeight = 50
+
     override fun onDraw(
         canvas: Canvas, position: Int,
         bounds: Rect, itemView: View,
@@ -40,5 +42,11 @@ class ShaderItemDecor : AbsItemDecor() {
         parent: RecyclerView, state: RecyclerView.State
     ) {
         outRect[0, 0, 0] = mHeight
+    }
+
+    override fun filter(block: (position: Int) -> Boolean) {
+    }
+
+    override fun filter(vararg filters: Int) {
     }
 }
