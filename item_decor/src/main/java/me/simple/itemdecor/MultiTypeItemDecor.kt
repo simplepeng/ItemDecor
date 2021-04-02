@@ -6,71 +6,65 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
-class MultiTypeItemDecor  {
+class MultiTypeItemDecor(
+    private val linker: (position: Int) -> AbsItemDecor
+) : AbsItemDecor(), IFilter {
 
-    private var mLinker: Linker? = null
-    private var mFilterFun: FilterFun? = null
+    //要过滤掉的ItemDecor
+    private var filterBlock: ((position: Int) -> Boolean)? = null
 
-    fun withLinker(linker: Linker?): MultiTypeItemDecor {
-        mLinker = linker
-        return this
+    override fun filter(block: (position: Int) -> Boolean) {
+        this.filterBlock = block
     }
 
-//    override fun filter(func: FilterFun): MultiTypeItemDecor {
-//        mFilterFun = func
-//        return this
-//    }
-//
-//    override fun filter(vararg excludes: Int): MultiTypeItemDecor {
-//        return this
-//    }
+    override fun filter(vararg filters: Int) {
+        filter { position ->
+            filters.contains(position)
+        }
+    }
 
-//    fun build(): ItemDecoration {
-//        return object : AbsItemDecor() {
-//            override fun onDraw(
-//                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
-//                parent: RecyclerView, state: RecyclerView.State
-//            ) {
-//                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
-//                val itemDecor = getItemDecoration(position) ?: return
-//                itemDecor.onDraw(canvas, position, bounds, itemView, parent, state)
-//            }
-//
-//            override fun onDrawOver(
-//                canvas: Canvas, position: Int, bounds: Rect, itemView: View,
-//                parent: RecyclerView, state: RecyclerView.State
-//            ) {
-//                if (mFilterFun != null && mFilterFun!!.exclude(position)) return
-//                val itemDecor = getItemDecoration(position) ?: return
-//                itemDecor.onDrawOver(canvas, position, bounds, itemView, parent, state)
-//            }
-//
-//            override fun setOutRect(
-//                outRect: Rect, position: Int, itemView: View,
-//                parent: RecyclerView, state: RecyclerView.State
-//            ) {
-//                if (mFilterFun != null && mFilterFun!!.exclude(position)) {
-//                    outRect[0, 0, 0] = 0
-//                    return
-//                }
-//                val itemDecor = getItemDecoration(position) ?: return
-//                itemDecor.setOutRect(outRect, position, itemView, parent, state)
-//            }
-//        }
-//    }
-//
-//    private fun getItemDecoration(position: Int): AbsItemDecor? {
-//
-//        val itemDecor: AbsItemDecor?
-//
-//        if (mLinker == null) {
-//            throw NullPointerException("Do You Call withLinker Method ?")
-//        }
-//        itemDecor = mLinker!!.bind(position)
-//
-////        if (itemDecor == null) {
-////            throw new NullPointerException("Do You Call register or withLinker Method ?");
-////        }
-//        return itemDecor
-//    }
+    override fun onDraw(
+        canvas: Canvas,
+        position: Int,
+        bounds: Rect,
+        itemView: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        super.onDraw(canvas, position, bounds, itemView, parent, state)
+        if (filterBlock?.invoke(position) == true) {
+            return
+        }
+        linker.invoke(position).onDraw(canvas, position, bounds, itemView, parent, state)
+    }
+
+    override fun onDrawOver(
+        canvas: Canvas,
+        position: Int,
+        bounds: Rect,
+        itemView: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        super.onDrawOver(canvas, position, bounds, itemView, parent, state)
+        if (filterBlock?.invoke(position) == true) {
+            return
+        }
+        linker.invoke(position).onDrawOver(canvas, position, bounds, itemView, parent, state)
+    }
+
+    override fun setOutRect(
+        outRect: Rect,
+        position: Int,
+        itemView: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        super.setOutRect(outRect, position, itemView, parent, state)
+        if (filterBlock?.invoke(position) == true) {
+            outRect.set(0, 0, 0, 0)
+            return
+        }
+        linker.invoke(position).setOutRect(outRect, position, itemView, parent, state)
+    }
 }

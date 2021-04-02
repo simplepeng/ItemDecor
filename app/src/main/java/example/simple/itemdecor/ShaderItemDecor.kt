@@ -43,10 +43,4 @@ class ShaderItemDecor : AbsItemDecor() {
     ) {
         outRect[0, 0, 0] = mHeight
     }
-
-    override fun filter(block: (position: Int) -> Boolean) {
-    }
-
-    override fun filter(vararg filters: Int) {
-    }
 }

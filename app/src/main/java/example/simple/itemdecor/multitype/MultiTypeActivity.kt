@@ -12,8 +12,8 @@ import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import me.simple.itemdecor.AbsItemDecor
 import me.simple.itemdecor.LinearItemDecor
-import me.simple.itemdecor.Linker
 import me.simple.itemdecor.MultiTypeItemDecor
+import me.simple.itemdecor.multiType
 
 class MultiTypeActivity : AppCompatActivity() {
 
@@ -42,8 +42,8 @@ class MultiTypeActivity : AppCompatActivity() {
         decoration2.color = Color.BLACK
 
         val decoration3 = LinearItemDecor()
-        decoration3.color = Color.RED
-        decoration3.marginStart = 45f
+        decoration3.color = Color.BLUE
+        decoration3.size = 20
 
         val decoration4 = LinearItemDecor()
         decoration4.color = Color.GREEN
@@ -51,22 +51,33 @@ class MultiTypeActivity : AppCompatActivity() {
         decoration4.margin = 115f
 
         val decoration5: AbsItemDecor = ShaderItemDecor()
-        val decoration = MultiTypeItemDecor()
-            .withLinker(object : Linker {
-                override fun bind(position: Int): AbsItemDecor? {
-                    when (position) {
-                        0 -> return decoration3
-                        1 -> return decoration2
-                        2 -> return decoration4
-                        3 -> return decoration5
-                    }
-                    return decoration1
-                }
-            })
 
-//        recyclerView.addItemDecoration(decoration)
+        recyclerView.multiType { position ->
+            when (position) {
+                0 -> decoration3
+                1 -> decoration2
+                2 -> decoration4
+                3 -> decoration5
+                else -> decoration1
+            }
+        }
+//        val multiTypeItemDecor = MultiTypeItemDecor { position ->
+//            when (position) {
+//                0 -> decoration3
+//                1 -> decoration2
+//                2 -> decoration4
+//                3 -> decoration5
+//                else -> decoration1
+//            }
+//        }
+//        recyclerView.addItemDecoration(multiTypeItemDecor)
 
         mItems.add(MultiTypeHeaderBean())
+        mItems.add(MultiTypeItemBean())
+        mItems.add(MultiTypeItemBean())
+        mItems.add(MultiTypeItemBean())
+        mItems.add(MultiTypeItemBean())
+        mItems.add(MultiTypeItemBean())
         mItems.add(MultiTypeItemBean())
         mItems.add(MultiTypeItemBean())
         mItems.add(MultiTypeItemBean())

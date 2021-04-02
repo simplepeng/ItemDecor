@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class GridItemDecor : AbsItemDecor() {
+class GridItemDecor : AbsItemDecor(), IFilter {
 
     var marginStart = 0
     var marginTop = 0

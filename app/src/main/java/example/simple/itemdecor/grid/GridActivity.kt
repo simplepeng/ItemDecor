@@ -9,6 +9,7 @@ import example.simple.itemdecor.R
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import me.simple.itemdecor.GridItemDecor
+import me.simple.itemdecor.space
 
 class GridActivity : AppCompatActivity() {
 
@@ -27,10 +28,11 @@ class GridActivity : AppCompatActivity() {
         rvGrid.layoutManager = GridLayoutManager(this, 4)
         rvGrid.adapter = mAdapter
 
-        val spaceItemDecor = GridItemDecor().apply {
-            margin = 10
-        }
-        rvGrid.addItemDecoration(spaceItemDecor)
+//        val spaceItemDecor = GridItemDecor().apply {
+//            margin = 10
+//        }
+//        rvGrid.addItemDecoration(spaceItemDecor)
+        rvGrid.space(10)
 
         for (i in 0..4) {
             mItems.add(GridItemBean())

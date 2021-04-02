@@ -5,11 +5,11 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class AbsItemDecor : RecyclerView.ItemDecoration(), IFilter {
+open class AbsItemDecor : RecyclerView.ItemDecoration() {
 
     private var bounds = Rect()
 
-    override fun onDraw(
+    final override fun onDraw(
         c: Canvas,
         parent: RecyclerView,
         state: RecyclerView.State
@@ -26,7 +26,7 @@ abstract class AbsItemDecor : RecyclerView.ItemDecoration(), IFilter {
         }
     }
 
-    override fun onDrawOver(
+    final override fun onDrawOver(
         c: Canvas,
         parent: RecyclerView,
         state: RecyclerView.State
@@ -43,7 +43,7 @@ abstract class AbsItemDecor : RecyclerView.ItemDecoration(), IFilter {
         }
     }
 
-    override fun getItemOffsets(
+    final override fun getItemOffsets(
         outRect: Rect,
         view: View,
         parent: RecyclerView,

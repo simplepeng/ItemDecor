@@ -3,6 +3,9 @@ package me.simple.itemdecor
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ *
+ */
 fun RecyclerView.divider(
     color: Int = Color.LTGRAY,
     size: Int = 1,
@@ -17,6 +20,9 @@ fun RecyclerView.divider(
     return itemDecor
 }
 
+/**
+ *
+ */
 fun RecyclerView.divider(
     color: Int = Color.LTGRAY,
     size: Int = 1,
@@ -33,6 +39,9 @@ fun RecyclerView.divider(
     return itemDecor
 }
 
+/**
+ *
+ */
 fun RecyclerView.space(
     margin: Int
 ): GridItemDecor {
@@ -41,4 +50,15 @@ fun RecyclerView.space(
     }
     this.addItemDecoration(itemDecor)
     return itemDecor
+}
+
+/**
+ *
+ */
+fun RecyclerView.multiType(
+    linker: (position: Int) -> AbsItemDecor
+): MultiTypeItemDecor {
+    val multiTypeItemDecor = MultiTypeItemDecor(linker)
+    this.addItemDecoration(multiTypeItemDecor)
+    return multiTypeItemDecor
 }
