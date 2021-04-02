@@ -8,15 +8,21 @@ RecyclerView.ItemDecoration的简易写法，轻松实现RecyclerView的Divider�
 
 ## 导入依赖
 
-```groovy
-repositories {
-    jcenter()
-}
-...
-dependencies {
-  implementation 'me.simple:item-decor:1.0.1'
-}
+[![](https://jitpack.io/v/simplepeng/ItemDecor.svg)](https://jitpack.io/#simplepeng/ItemDecor)
 
+```groovy
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+```groovy
+dependencies {
+        implementation 'com.github.simplepeng:ItemDecor:v1.0.2'
+}
 ```
 
 ## LinearItemDecor

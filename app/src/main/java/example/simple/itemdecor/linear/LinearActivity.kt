@@ -58,7 +58,7 @@ class LinearActivity : AppCompatActivity() {
         val itemDecor = LinearItemDecor().apply {
             size = 10
             color = Color.BLACK
-            retainLast = true//
+            retainLast = true//保留最后一个
             margin = 33.5f
         }
         //过滤点不需要显示的divider
