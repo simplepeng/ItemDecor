@@ -4,9 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
-open class AbsItemDecor : ItemDecoration() {
+open class AbsItemDecor : RecyclerView.ItemDecoration() {
 
     private var bounds = Rect()
 

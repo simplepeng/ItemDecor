@@ -1,32 +1,30 @@
-package example.simple.itemdecor;
+package example.simple.itemdecor
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
 
-import androidx.appcompat.widget.AppCompatImageView;
-
-public class SquareImageView extends AppCompatImageView {
-
-    public SquareImageView(Context context) {
-        super(context);
+class SquareImageView : AppCompatImageView {
+    constructor(context: Context?) : super(context) {}
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
     }
 
-    public SquareImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public SquareImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
-
-        int childWidthSize = getMeasuredWidth();
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        var widthMeasureSpec = widthMeasureSpec
+        var heightMeasureSpec = heightMeasureSpec
+        setMeasuredDimension(
+            getDefaultSize(0, widthMeasureSpec),
+            getDefaultSize(0, heightMeasureSpec)
+        )
+        val childWidthSize = measuredWidth
         //高度和宽度一样
-        heightMeasureSpec = widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(childWidthSize, View.MeasureSpec.EXACTLY);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(childWidthSize, MeasureSpec.EXACTLY)
+        heightMeasureSpec = widthMeasureSpec
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 }

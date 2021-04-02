@@ -1,7 +1,6 @@
-package example.simple.itemdecor.multitype;
+package example.simple.itemdecor.multitype
 
-public class MultiTypeItemBean {
-
-    public int resId;
-    public String nickName;
+class MultiTypeItemBean {
+    var resId = 0
+    var nickName: String? = null
 }

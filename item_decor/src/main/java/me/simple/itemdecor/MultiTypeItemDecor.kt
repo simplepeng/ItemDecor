@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
-class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
+class MultiTypeItemDecor  {
 
     private var mLinker: Linker? = null
     private var mFilterFun: FilterFun? = null
@@ -16,14 +16,14 @@ class MultiTypeItemDecor : IFilter<MultiTypeItemDecor> {
         return this
     }
 
-    override fun filter(func: FilterFun): MultiTypeItemDecor {
-        mFilterFun = func
-        return this
-    }
-
-    override fun filter(vararg excludes: Int): MultiTypeItemDecor {
-        return this
-    }
+//    override fun filter(func: FilterFun): MultiTypeItemDecor {
+//        mFilterFun = func
+//        return this
+//    }
+//
+//    override fun filter(vararg excludes: Int): MultiTypeItemDecor {
+//        return this
+//    }
 
     fun build(): ItemDecoration {
         return object : AbsItemDecor() {

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.math.roundToInt
 
-class LinearItemDecor : AbsItemDecor() {
+class LinearItemDecor : AbsItemDecor(), IFilter {
 
     companion object {
         const val HORIZONTAL = 0
@@ -22,50 +22,42 @@ class LinearItemDecor : AbsItemDecor() {
     var orientation = VERTICAL
 
     //divider颜色
-    var color = Color.GRAY
+    var color = Color.LTGRAY
+        set(value) {
+            paint.color = value
+            field = value
+        }
 
     //divider的大小
     var size: Int = 1
 
     //
-    var margin = 0f
-        set(value) {
-            marginStart = margin
-            marginEnd = margin
-            field = value
-        }
-
     var marginStart = 0f
     var marginEnd = 0f
 
-    //要过滤掉的divider
-//    private var mFilterFun: FilterFun? = null
-//    var mExcludes: HashSet<Int>? = null
-    private var filterBlock: ((position: Int) -> Boolean)? = null
+    var margin = 0f
+        set(value) {
+            this.marginStart = value
+            this.marginEnd = value
+            field = value
+        }
+
 
     //是否保存最后一个divider
     var retainLast = false
 
-//    fun filter(func: FilterFun) {
-//        mFilterFun = func
-//    }
+    //要过滤掉的divider
+    private var filterBlock: ((position: Int) -> Boolean)? = null
 
-    fun filter(block: (position: Int) -> Boolean) {
+    override fun filter(block: (position: Int) -> Boolean) {
         this.filterBlock = block
     }
 
-    fun filter(vararg filters: Int) {
+    override fun filter(vararg filters: Int) {
         filter { position ->
             filters.contains(position)
         }
     }
-
-//    fun filter(vararg excludes: Int) {
-//        mExcludes = HashSet()
-//        for (exclude in excludes) {
-//            mExcludes!!.add(exclude)
-//        }
-//    }
 
     override fun onDraw(
         canvas: Canvas,

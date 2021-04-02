@@ -1,45 +1,44 @@
-package example.simple.itemdecor;
+package example.simple.itemdecor
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Shader;
-import android.view.View;
+import android.graphics.*
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import me.simple.itemdecor.AbsItemDecor
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import me.simple.itemdecor.AbsItemDecor;
-
-public class ShaderItemDecor extends AbsItemDecor {
-
-    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private int mHeight = 50;
-
-    @Override
-    public void onDraw(Canvas canvas, int position,
-                       Rect bounds, View itemView,
-                       RecyclerView parent, RecyclerView.State state) {
-
-        mPaint.setShader(new LinearGradient(0, 0, parent.getWidth(), 50, Color.YELLOW, Color.GREEN, Shader.TileMode.CLAMP));
-        int bottom = bounds.bottom + Math.round(itemView.getTranslationY());
-        int top = bottom - mHeight;
-        canvas.drawRect(new Rect(0, top, parent.getWidth(), bottom), mPaint);
-
+class ShaderItemDecor : AbsItemDecor() {
+    private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val mHeight = 50
+    override fun onDraw(
+        canvas: Canvas, position: Int,
+        bounds: Rect, itemView: View,
+        parent: RecyclerView, state: RecyclerView.State
+    ) {
+        mPaint.shader = LinearGradient(
+            0f,
+            0f,
+            parent.width.toFloat(),
+            50f,
+            Color.YELLOW,
+            Color.GREEN,
+            Shader.TileMode.CLAMP
+        )
+        val bottom = bounds.bottom + Math.round(itemView.translationY)
+        val top = bottom - mHeight
+        canvas.drawRect(Rect(0, top, parent.width, bottom), mPaint)
     }
 
-    @Override
-    public void onDrawOver(Canvas canvas, int position,
-                           Rect bounds, View itemView,
-                           RecyclerView parent, RecyclerView.State state) {
-
+    override fun onDrawOver(
+        canvas: Canvas, position: Int,
+        bounds: Rect, itemView: View,
+        parent: RecyclerView, state: RecyclerView.State
+    ) {
     }
 
-    @Override
-    public void setOutRect(Rect outRect, int position,
-                           View itemView,
-                           RecyclerView parent, RecyclerView.State state) {
-        outRect.set(0, 0, 0, mHeight);
+    override fun setOutRect(
+        outRect: Rect, position: Int,
+        itemView: View,
+        parent: RecyclerView, state: RecyclerView.State
+    ) {
+        outRect[0, 0, 0] = mHeight
     }
 }

@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class GridItemDecor : IFilter<GridItemDecor> {
+class GridItemDecor {
     /**
      *
      */
@@ -49,18 +49,18 @@ class GridItemDecor : IFilter<GridItemDecor> {
         return this
     }
 
-    override fun filter(func: FilterFun): GridItemDecor {
-        mFilterFun = func
-        return this
-    }
-
-    override fun filter(vararg excludes: Int): GridItemDecor {
-        mExcludes = HashSet()
-        for (exclude in excludes) {
-            mExcludes!!.add(exclude)
-        }
-        return this
-    }
+//    override fun filter(func: FilterFun): GridItemDecor {
+//        mFilterFun = func
+//        return this
+//    }
+//
+//    override fun filter(vararg excludes: Int): GridItemDecor {
+//        mExcludes = HashSet()
+//        for (exclude in excludes) {
+//            mExcludes!!.add(exclude)
+//        }
+//        return this
+//    }
 
     fun build(): AbsItemDecor {
         Utils.checkFilter(mFilterFun, mExcludes)

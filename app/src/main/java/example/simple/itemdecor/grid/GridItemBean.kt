@@ -1,4 +1,3 @@
-package example.simple.itemdecor.grid;
+package example.simple.itemdecor.grid
 
-public class GridItemBean {
-}
+class GridItemBean 

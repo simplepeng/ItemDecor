@@ -1,32 +1,17 @@
-package example.simple.itemdecor.linear;
+package example.simple.itemdecor.linear
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import example.simple.itemdecor.R
+import me.drakeet.multitype.ItemViewBinder
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import example.simple.itemdecor.R;
-import me.drakeet.multitype.ItemViewBinder;
-
-public class LinearHorizontalItemBinder extends ItemViewBinder<LinearItemBean, LinearHorizontalItemBinder.VH> {
-
-    @NonNull
-    @Override
-    protected VH onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new VH(inflater.inflate(R.layout.item_linear_horizontal, parent, false));
+class LinearHorizontalItemBinder : ItemViewBinder<LinearItemBean, LinearHorizontalItemBinder.VH>() {
+    override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): VH {
+        return VH(inflater.inflate(R.layout.item_linear_horizontal, parent, false))
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull VH holder, @NonNull LinearItemBean item) {
-
-    }
-
-    class VH extends RecyclerView.ViewHolder {
-
-        public VH(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
+    override fun onBindViewHolder(holder: VH, item: LinearItemBean) {}
+    inner class VH(itemView: View) : ViewHolder(itemView)
 }

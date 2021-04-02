@@ -1,124 +1,108 @@
-package example.simple.itemdecor.linear;
+package example.simple.itemdecor.linear
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.graphics.Color
+import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import example.simple.itemdecor.R
+import me.drakeet.multitype.Items
+import me.drakeet.multitype.MultiTypeAdapter
+import me.simple.itemdecor.LinearItemDecor
+import me.simple.itemdecor.divider
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+class LinearActivity : AppCompatActivity() {
 
-import example.simple.itemdecor.R;
-import kotlin.jvm.functions.Function1;
-import me.drakeet.multitype.Items;
-import me.drakeet.multitype.MultiTypeAdapter;
-import me.simple.itemdecor.AbsItemDecor;
-import me.simple.itemdecor.FilterFun;
-import me.simple.itemdecor.LinearItemDecor;
+    private val mVerticalItems = Items()
+    private val mVerticalAdapter = MultiTypeAdapter(mVerticalItems)
+    private val mHorizontalItems = Items()
+    private val mHorizontalAdapter = MultiTypeAdapter(mHorizontalItems)
 
-public class LinearActivity extends AppCompatActivity {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.layout_linear)
 
-    private Items mVerticalItems = new Items();
-    private MultiTypeAdapter mVerticalAdapter = new MultiTypeAdapter(mVerticalItems);
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener { finish() }
 
-    private Items mHorizontalItems = new Items();
-    private MultiTypeAdapter mHorizontalAdapter = new MultiTypeAdapter(mHorizontalItems);
+        initHorizontal()
+        initVertical()
+    }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_linear);
+    private fun initHorizontal() {
+        mHorizontalAdapter.register(LinearItemBean::class.java, LinearHorizontalItemBinder())
+        val rvHorizontal = findViewById<RecyclerView>(R.id.rv_horizontal)
+        rvHorizontal.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        val itemDecor = LinearItemDecor()
+        itemDecor.orientation = LinearItemDecor.HORIZONTAL
+        itemDecor.size = 20
+        rvHorizontal.addItemDecoration(itemDecor)
+
+        rvHorizontal.adapter = mHorizontalAdapter
+
+        addHorizontalData()
+    }
+
+    private fun initVertical() {
+        mVerticalAdapter.register(LinearItemBean::class.java, LinearItemBinder())
+        val rvVertical = findViewById<RecyclerView>(R.id.rv_vertical)
+        rvVertical.layoutManager = LinearLayoutManager(this)
+
+        rvVertical.divider(Color.RED, 10, 20f, 100f)
+//        val itemDecor = LinearItemDecor()
+//        itemDecor.size = 10
+//        itemDecor.color = Color.BLACK
+//        itemDecor.filter { integer: Int ->
+//            Log.d("LinearActivity", "position == $integer")
+//            integer % 2 == 0
+//        }
+//        itemDecor.retainLast = true
+//        itemDecor.margin = 33.5f
+//        rvVertical.addItemDecoration(itemDecor)
+
+        rvVertical.adapter = mVerticalAdapter
+        addVerticalData()
+    }
+
+    private fun addHorizontalData() {
+        mHorizontalItems.add(LinearItemBean())
+        mHorizontalItems.add(LinearItemBean())
+        mHorizontalItems.add(LinearItemBean())
+        mHorizontalItems.add(LinearItemBean())
+        mHorizontalItems.add(LinearItemBean())
+        mHorizontalItems.add(LinearItemBean())
+        mHorizontalAdapter.notifyItemRangeInserted(mVerticalItems.size - 6, 6)
+    }
+
+    private fun addVerticalData() {
+        mVerticalItems.add(LinearItemBean())
+        mVerticalItems.add(LinearItemBean())
+        mVerticalItems.add(LinearItemBean())
+        mVerticalItems.add(LinearItemBean())
+        mVerticalItems.add(LinearItemBean())
+        mVerticalItems.add(LinearItemBean())
+        mVerticalAdapter.notifyItemRangeInserted(mVerticalItems.size - 6, 6)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_add -> {
+                addHorizontalData()
+                addVerticalData()
             }
-        });
-
-        initHorizontal();
-        initVertical();
-    }
-
-    private void initHorizontal() {
-        mHorizontalAdapter.register(LinearItemBean.class, new LinearHorizontalItemBinder());
-        RecyclerView rv_horizontal = findViewById(R.id.rv_horizontal);
-        rv_horizontal.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        LinearItemDecor itemDecor = new LinearItemDecor();
-        itemDecor.setOrientation(LinearItemDecor.HORIZONTAL);
-        itemDecor.setSize(20);
-        rv_horizontal.addItemDecoration(itemDecor);
-
-        rv_horizontal.setAdapter(mHorizontalAdapter);
-
-        getHorizontalData();
-    }
-
-    private void initVertical() {
-        mVerticalAdapter.register(LinearItemBean.class, new LinearItemBinder());
-        RecyclerView rv_vertical = findViewById(R.id.rv_vertical);
-        rv_vertical.setLayoutManager(new LinearLayoutManager(this));
-
-        LinearItemDecor itemDecor = new LinearItemDecor();
-        itemDecor.setSize(10);
-        itemDecor.setColor(Color.BLACK);
-//        itemDecor.filter(1, 3);
-        itemDecor.filter(new Function1<Integer, Boolean>() {
-            @Override
-            public Boolean invoke(Integer integer) {
-                return integer % 2 == 0;
-            }
-        });
-        itemDecor.setRetainLast(true);
-        itemDecor.setMargin(33.5f);
-        rv_vertical.addItemDecoration(itemDecor);
-
-        rv_vertical.setAdapter(mVerticalAdapter);
-
-        getVerticalData();
-    }
-
-    private void getHorizontalData() {
-        mHorizontalItems.add(new LinearItemBean());
-        mHorizontalItems.add(new LinearItemBean());
-        mHorizontalItems.add(new LinearItemBean());
-        mHorizontalItems.add(new LinearItemBean());
-        mHorizontalItems.add(new LinearItemBean());
-        mHorizontalItems.add(new LinearItemBean());
-        mHorizontalAdapter.notifyItemRangeInserted(mVerticalItems.size() - 6, 6);
-    }
-
-    private void getVerticalData() {
-        mVerticalItems.add(new LinearItemBean());
-        mVerticalItems.add(new LinearItemBean());
-        mVerticalItems.add(new LinearItemBean());
-        mVerticalItems.add(new LinearItemBean());
-        mVerticalItems.add(new LinearItemBean());
-        mVerticalItems.add(new LinearItemBean());
-        mVerticalAdapter.notifyItemRangeInserted(mVerticalItems.size() - 6, 6);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_add:
-                getHorizontalData();
-                getVerticalData();
-                break;
         }
-        return true;
+        return true
     }
 }

@@ -1,4 +1,3 @@
-package example.simple.itemdecor.multitype;
+package example.simple.itemdecor.multitype
 
-public class MultiTypeHeaderBean {
-}
+class MultiTypeHeaderBean 
