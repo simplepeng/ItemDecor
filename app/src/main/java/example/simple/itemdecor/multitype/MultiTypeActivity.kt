@@ -63,15 +63,15 @@ class MultiTypeActivity : AppCompatActivity() {
         }
         recyclerView.addItemDecoration(multiTypeItemDecor)
         //扩展函数
-        recyclerView.multiType { position ->
-            when (position) {
-                0 -> decoration3
-                1 -> decoration2
-                2 -> decoration4
-                3 -> decoration5
-                else -> decoration1
-            }
-        }
+//        recyclerView.multiType { position ->
+//            when (position) {
+//                0 -> decoration3
+//                1 -> decoration2
+//                2 -> decoration4
+//                3 -> decoration5
+//                else -> decoration1
+//            }
+//        }
 
         mItems.add(MultiTypeHeaderBean())
         mItems.add(MultiTypeItemBean())
