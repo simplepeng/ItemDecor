@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.math.roundToInt
 
-class LinearItemDecor : AbsItemDecor(), IFilter {
+class LinearItemDecor : AbsItemDecor(), IFilter<LinearItemDecor> {
 
     companion object {
         const val HORIZONTAL = 0
@@ -49,8 +49,9 @@ class LinearItemDecor : AbsItemDecor(), IFilter {
     //要过滤掉的divider
     private var filterBlock: ((position: Int) -> Boolean)? = null
 
-    override fun filter(block: (position: Int) -> Boolean) {
+    override fun filter(block: (position: Int) -> Boolean):LinearItemDecor {
         this.filterBlock = block
+        return this
     }
 
     override fun filter(vararg filters: Int) {

@@ -1,6 +1,8 @@
 package me.simple.itemdecor
 
-interface IFilter {
-    fun filter(block: (position: Int) -> Boolean)
+import androidx.recyclerview.widget.RecyclerView
+
+interface IFilter<T : RecyclerView.ItemDecoration> {
+    fun filter(block: (position: Int) -> Boolean): T
     fun filter(vararg filters: Int)
 }

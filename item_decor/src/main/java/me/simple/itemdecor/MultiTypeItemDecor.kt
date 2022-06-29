@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 class MultiTypeItemDecor(
     private val linker: (position: Int) -> AbsItemDecor
-) : AbsItemDecor(), IFilter {
+) : AbsItemDecor(), IFilter<MultiTypeItemDecor> {
 
     //要过滤掉的ItemDecor
     private var filterBlock: ((position: Int) -> Boolean)? = null
 
-    override fun filter(block: (position: Int) -> Boolean) {
+    override fun filter(block: (position: Int) -> Boolean): MultiTypeItemDecor {
         this.filterBlock = block
+        return this
     }
 
     override fun filter(vararg filters: Int) {

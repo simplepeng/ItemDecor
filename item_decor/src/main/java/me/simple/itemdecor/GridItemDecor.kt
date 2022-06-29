@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class GridItemDecor : AbsItemDecor(), IFilter {
+class GridItemDecor : AbsItemDecor(), IFilter<GridItemDecor> {
 
     companion object {
 
@@ -41,8 +41,9 @@ class GridItemDecor : AbsItemDecor(), IFilter {
     //要过滤掉的Space
     private var filterBlock: ((position: Int) -> Boolean)? = null
 
-    override fun filter(block: (position: Int) -> Boolean) {
+    override fun filter(block: (position: Int) -> Boolean): GridItemDecor {
         this.filterBlock = block
+        return this
     }
 
     override fun filter(vararg filters: Int) {
