@@ -11,23 +11,16 @@ RecyclerView.ItemDecoration的简易写法，轻松实现RecyclerView的Divider�
 [![](https://jitpack.io/v/simplepeng/ItemDecor.svg)](https://jitpack.io/#simplepeng/ItemDecor)
 
 ```groovy
-allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
-}
+maven { url 'https://jitpack.io' }
 ```
 
 ```groovy
-dependencies {
-        implementation 'com.github.simplepeng:ItemDecor:v1.0.2'
-}
+implementation 'com.github.simplepeng:ItemDecor:v1.0.2'
 ```
 
 ## LinearItemDecor
 
-```java
+```kotlin
 val itemDecor = LinearItemDecor().apply {
     size = 10
     color = Color.BLACK
@@ -52,7 +45,7 @@ rvVertical.divider(Color.RED, 10, 20f, 100f)
 
 ## GridItemDecor
 
-```java
+```kotlin
 val spaceItemDecor = GridItemDecor().apply {
     margin = 10
 }
@@ -63,7 +56,7 @@ rvGrid.space(10)
 
 ## MultiTypeItemDecor
 
-```java
+```kotlin
 val decoration1 = LinearItemDecor()
 decoration1.size = 20
 decoration1.color = Color.LTGRAY
@@ -106,7 +99,7 @@ recyclerView.multiType { position ->
 
 ## 自定义ItemDecor
 
-```java
+```kotlin
 class ShaderItemDecor : AbsItemDecor() {
 
     private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -164,6 +157,7 @@ class ShaderItemDecor : AbsItemDecor() {
 
 ## 版本迭代
 
+* v1.0.3：优化
 * v1.0.2：升级为KT，写法更轻松。
 * v1.0.1：修复bug
 * v1.0.0：首次上传
