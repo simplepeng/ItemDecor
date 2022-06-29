@@ -45,9 +45,18 @@ fun RecyclerView.divider(
 fun RecyclerView.space(
     margin: Int
 ): GridItemDecor {
-    val itemDecor = GridItemDecor().apply {
-        this.margin = margin
-    }
+    val itemDecor = GridItemDecor.new(margin)
+    this.addItemDecoration(itemDecor)
+    return itemDecor
+}
+
+fun RecyclerView.space(
+    marginStart: Int = 0,
+    marginTop: Int = 0,
+    marginEnd: Int = 0,
+    marginBottom: Int = 0,
+): GridItemDecor {
+    val itemDecor = GridItemDecor.new(marginStart, marginTop, marginEnd, marginBottom)
     this.addItemDecoration(itemDecor)
     return itemDecor
 }

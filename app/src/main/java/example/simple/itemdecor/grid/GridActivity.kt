@@ -34,6 +34,8 @@ class GridActivity : AppCompatActivity() {
 //        rvGrid.addItemDecoration(spaceItemDecor)
         //扩展函数
         rvGrid.space(10)
+//        rvGrid.space(marginTop = 10, marginStart = 10)
+//        rvGrid.space(marginTop = 10, marginStart = 10).filter(2)
 
         for (i in 0..4) {
             mItems.add(GridItemBean())
