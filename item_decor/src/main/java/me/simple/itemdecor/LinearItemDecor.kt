@@ -11,6 +11,36 @@ class LinearItemDecor : AbsItemDecor(), IFilter<LinearItemDecor> {
     companion object {
         const val HORIZONTAL = 0
         const val VERTICAL = 1
+
+        fun new(
+            color: Int = Color.LTGRAY,
+            size: Int = 1,
+            margin: Float = 0f,
+            retainLast: Boolean = false,
+            orientation: Int = VERTICAL
+        ) = LinearItemDecor().apply {
+            this.color = color
+            this.size = size
+            this.margin = margin
+            this.retainLast = retainLast
+            this.orientation = orientation
+        }
+
+        fun new(
+            color: Int = Color.LTGRAY,
+            size: Int = 1,
+            marginStart: Float = 0f,
+            marginEnd: Float = 0f,
+            retainLast: Boolean = false,
+            orientation: Int = VERTICAL
+        ) = LinearItemDecor().apply {
+            this.color = color
+            this.size = size
+            this.marginStart = marginStart
+            this.marginEnd = marginEnd
+            this.retainLast = retainLast
+            this.orientation = orientation
+        }
     }
 
     private val mLineRect = RectF()
@@ -49,7 +79,7 @@ class LinearItemDecor : AbsItemDecor(), IFilter<LinearItemDecor> {
     //要过滤掉的divider
     private var filterBlock: ((position: Int) -> Boolean)? = null
 
-    override fun filter(block: (position: Int) -> Boolean):LinearItemDecor {
+    override fun filter(block: (position: Int) -> Boolean): LinearItemDecor {
         this.filterBlock = block
         return this
     }

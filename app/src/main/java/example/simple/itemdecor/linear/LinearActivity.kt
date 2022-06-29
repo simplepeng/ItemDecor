@@ -2,7 +2,6 @@ package example.simple.itemdecor.linear
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -70,7 +69,8 @@ class LinearActivity : AppCompatActivity() {
 //        rvVertical.addItemDecoration(itemDecor)
 
         //高级点，使用KT扩展函数
-        rvVertical.divider(Color.RED, 10, 20f, 100f)
+        rvVertical.divider(Color.RED, 2, retainLast = true)
+//        rvVertical.divider(Color.RED, 10, 20f, 100f)
 
         rvVertical.adapter = mVerticalAdapter
         addVerticalData()
