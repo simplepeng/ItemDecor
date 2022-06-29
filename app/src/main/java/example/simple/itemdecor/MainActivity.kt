@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         findViewById<View>(R.id.item_linear).setOnClickListener {
             startActivity(
                 Intent(
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+
         findViewById<View>(R.id.item_grid).setOnClickListener {
             startActivity(
                 Intent(
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+
         findViewById<View>(R.id.item_multiType).setOnClickListener {
             startActivity(
                 Intent(

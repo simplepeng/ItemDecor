@@ -1,46 +1,35 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'maven'
-apply plugin: 'com.novoda.bintray-release'
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
 
-android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
     }
 }
 
-uploadArchives {
-    repositories.mavenDeployer {
-        // 本地仓库路径
-        repository(url: 'file:///Users/chenpeng/Desktop/Repositories/')
-        // 唯一标识
-        pom.groupId = rootProject.ext.groupId
-        // 项目名称
-        pom.artifactId = rootProject.ext.artifactId
-        // 版本号
-        pom.version = rootProject.ext.publishVersion
+android {
+    compileSdk rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api "androidx.recyclerview:recyclerview:1.1.0"
+    api "androidx.recyclerview:recyclerview:1.2.1"
 }
 
-publish {
-    userOrg = 'simplepeng'
-    groupId = rootProject.ext.groupId
-    artifactId = rootProject.ext.artifactId
-    publishVersion = rootProject.ext.publishVersion
-    desc = 'RecyclerView.ItemDecoration的简易写法'
-    website = 'https://github.com/simplepeng/ItemDecor'
-}
-repositories {
-    mavenCentral()
-}
+
