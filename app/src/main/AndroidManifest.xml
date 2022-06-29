@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,9 +22,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".linear.LinearActivity"/>
-        <activity android:name=".grid.GridActivity"/>
-        <activity android:name=".multitype.MultiTypeActivity"/>
+        <activity
+            android:name=".linear.LinearActivity"
+            android:exported="true" />
+        <activity
+            android:name=".grid.GridActivity"
+            android:exported="true" />
+        <activity
+            android:name=".multitype.MultiTypeActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

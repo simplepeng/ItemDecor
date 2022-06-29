@@ -9,11 +9,11 @@ task clean(type: Delete) {
 }
 
 ext{
-    compileSdkVersion = 28
+    compileSdkVersion = 31
     buildToolsVersion = "29.0.1"
 
     minSdkVersion = 14
-    targetSdkVersion = 28
+    targetSdkVersion = 31
 
     groupId = "me.simple"
     artifactId = "item-decor"
